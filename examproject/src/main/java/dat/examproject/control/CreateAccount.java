@@ -1,0 +1,111 @@
+package dat.examproject.control;
+
+import dat.examproject.model.config.ApplicationStart;
+import dat.examproject.model.entities.Order;
+import dat.examproject.model.entities.User;
+import dat.examproject.model.exceptions.DatabaseException;
+import dat.examproject.model.persistence.ConnectionPool;
+import dat.examproject.model.persistence.OrderMapper;
+import dat.examproject.model.persistence.UserMapper;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+@WebServlet(name = "createaccount", urlPatterns = {"/createaccount"} )
+public class CreateAccount extends HttpServlet {
+    private ConnectionPool connectionPool;
+
+    @Override
+    public void init() throws ServletException
+    {
+        this.connectionPool = ApplicationStart.getConnectionPool();
+    }
+
+    private static String USER = "root";
+    private static String PASSWORD = "Dreng127";
+    private static String URL = "jdbc:mysql://localhost:3306/testing";
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
+    {
+        // You shouldn't end up here with a GET-request, thus you get sent back to frontpage
+        doPost(request, response);
+        response.sendRedirect("index.jsp");
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
+    {
+        response.setContentType("text/html");
+        HttpSession session = request.getSession();
+        session.setAttribute("user", null); // adding empty user object to session scope
+        UserMapper userMapper = new UserMapper(connectionPool);
+        ArrayList<Order> orders = new ArrayList<>();
+        AddOrder addOrder = new AddOrder();
+        // If any orders has been made, in the time the user has been on the website, this will get those orders
+        // Gets orders
+        if (session.getAttribute("orders") != null) {
+            orders = (ArrayList<Order>) session.getAttribute("orders");
+        }
+        else {
+            session.setAttribute("orders", null);
+        }
+        OrderMapper orderMapper = new OrderMapper(this.connectionPool = new ConnectionPool(USER, PASSWORD, URL));
+
+        System.out.println("1");
+        int carportBred = Integer.parseInt(request.getParameter("carW"));
+        System.out.println("2");
+        int carportLængde = Integer.parseInt(request.getParameter("carL"));
+        System.out.println("3");
+        int tag = Integer.parseInt(request.getParameter("roof"));
+        System.out.println("4");
+        int skurBred = Integer.parseInt(request.getParameter("shedW"));
+        System.out.println("5");
+        int skurLængde = Integer.parseInt(request.getParameter("shedL"));
+        System.out.println("6");
+
+        String email = request.getParameter("createEmail");
+        String password = request.getParameter("createPassword");
+        String name = request.getParameter("createName");
+        int phone = Integer.parseInt(request.getParameter("createPhone"));
+        int cardNr = Integer.parseInt(request.getParameter("createCardNr"));
+        int expMonth = Integer.parseInt(request.getParameter("createExpMonth"));
+        int expYear = Integer.parseInt(request.getParameter("createExpYear"));
+        int cvc = Integer.parseInt(request.getParameter("createCvc"));
+
+        try
+        {
+            // Comment: Lav således at, hvis en bruger skriver samme e-mail og adgangskode, kaldes login istedet
+            // og hvis en e-mail angives, som allerede eksisterer, skal den lave en exception
+            System.out.println("1");
+            userMapper.createUser(email, password, name, phone, "user", cardNr, expMonth, expYear, cvc);
+            System.out.println("2");
+            User user = userMapper.login(email, password);
+            System.out.println("3");
+            session = request.getSession();
+            session.setAttribute("user", user); // adding user object to session scope
+            //addOrder.doPost(request, response);
+            Order order = orderMapper.createOrder(user.getIdUser(), carportBred, carportLængde, tag, skurBred, skurLængde);
+            orders.add(order);
+            session.setAttribute("orders", orders);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
+        catch (DatabaseException e)
+        {
+            Logger.getLogger("web").log(Level.SEVERE, e.getMessage());
+            request.setAttribute("errormessage", e.getMessage());
+            request.getRequestDispatcher("error.jsp").forward(request, response);
+        }
+    }
+
+    public void destroy()
+    {
+
+    }
+}
