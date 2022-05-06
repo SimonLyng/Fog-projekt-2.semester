@@ -6,7 +6,6 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-        <br>
         Ordre status
     </jsp:attribute>
 

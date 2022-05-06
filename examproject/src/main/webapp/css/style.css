@@ -40,4 +40,20 @@ body {
 }
 
 
+label {
+    font-weight: bold;
+}
+
+.navbar-link:hover{
+    color: #0085A2 !important;
+}
+
+.navbar-link {
+    font-size: larger;
+    color: white !important;
+}
+
+.sidebar-link {
+    font-size: larger;
+}
 

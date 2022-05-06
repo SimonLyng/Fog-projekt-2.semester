@@ -6,8 +6,7 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-        <br>
-             Opret bruger:
+        Opret bruger
     </jsp:attribute>
 
     <jsp:body>

@@ -6,8 +6,7 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-        <br>
-             Kurv
+        Kurv
     </jsp:attribute>
 
     <jsp:body>
