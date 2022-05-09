@@ -196,7 +196,7 @@ public class OrderMapper {
             ex.printStackTrace();
         }
     }
-    public void removeOrder(int idOrder){
+    public ArrayList<Order> removeOrder(int idOrder, ArrayList<Order> orders) throws DatabaseException{
         String sql = "DELETE FROM orders WHERE idcustomer = ?";
         try (Connection connection = connectionPool.getConnection())
         {
@@ -208,7 +208,7 @@ public class OrderMapper {
         }
         catch (SQLException ex)
         {
-            ex.printStackTrace();
+            throw new DatabaseException(ex, "Noget");
         }
          sql = "DELETE FROM rtpiecelist WHERE orderid = ?";
         try (Connection connection = connectionPool.getConnection())
@@ -221,7 +221,7 @@ public class OrderMapper {
         }
         catch (SQLException ex)
         {
-            ex.printStackTrace();
+            throw new DatabaseException(ex, "Noget");
         }
         sql = "DELETE FROM sfpiecelist WHERE orderid = ?";
         try (Connection connection = connectionPool.getConnection())
@@ -234,8 +234,10 @@ public class OrderMapper {
         }
         catch (SQLException ex)
         {
-            ex.printStackTrace();
+            throw new DatabaseException(ex, "Noget");
         }
+        orders.removeIf(order -> order.getIdOrder() == idOrder);
         System.out.println("hi med dig");
+        return orders;
     }
 }

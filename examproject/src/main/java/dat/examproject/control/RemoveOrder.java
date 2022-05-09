@@ -50,16 +50,15 @@ public class RemoveOrder extends HttpServlet {
         int idOrder = Integer.parseInt(request.getParameter("OrderID"));
 
         try {
-            orderMapper.removeOrder(idOrder);
+            orders = orderMapper.removeOrder(idOrder, orders);
             session = request.getSession();
-            orders.removeIf(order -> order.getIdOrder() == idOrder);
-
-            request.getRequestDispatcher("adminOrders.jsp").forward(request, response);
+            session.setAttribute("orders", orders);
         } catch (DatabaseException e)
         {
             Logger.getLogger("web").log(Level.SEVERE, e.getMessage());
             request.setAttribute("errormessage", e.getMessage());
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
+        request.getRequestDispatcher("adminOrders.jsp").forward(request, response);
     }
 }
