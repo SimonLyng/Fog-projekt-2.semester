@@ -60,7 +60,7 @@ public class Login extends HttpServlet
         else {
             session.setAttribute("orders", null);
         }
-        OrderMapper orderMapper = new OrderMapper(this.connectionPool = new ConnectionPool(USER, PASSWORD, URL));
+        OrderMapper orderMapper = new OrderMapper(connectionPool);
         String username = request.getParameter("email");
         String password = request.getParameter("password");
 
