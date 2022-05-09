@@ -32,6 +32,7 @@
                             <td>${Integer.parseInt(order.getIdCustomer())}</td>
                             <td>${Integer.parseInt(order.getIdOrder())}</td>
                             <td>${order.getOrderStatus()}</td>
+                            <td> <input id="clickMe" type="button" value="Fjern Ordre" onclick="removeOrder(${Integer.parseInt(order.getIdOrder())});" /></td>
                         </tr>
                     </c:if>
                 </c:forEach>
@@ -54,6 +55,9 @@
                             <td>${Integer.parseInt(order.getIdCustomer())}</td>
                             <td>${Integer.parseInt(order.getIdOrder())}</td>
                             <td>${order.getOrderStatus()}</td>
+                            <td> <input id="clickMe1" type="button" value="Fjern Ordre" onclick="removeOrder(${Integer.parseInt(order.getIdOrder())});" /></td>
+                            <button onclick="removeOrder()">Fjern Ordre</button>
+
                         </tr>
                     </c:if>
                 </c:forEach>

@@ -196,5 +196,46 @@ public class OrderMapper {
             ex.printStackTrace();
         }
     }
-
+    public void removeOrder(int idOrder){
+        String sql = "DELETE FROM orders WHERE idcustomer = ?";
+        try (Connection connection = connectionPool.getConnection())
+        {
+            try (PreparedStatement stmt = connection.prepareStatement(sql))
+            {
+                stmt.setInt(1,idOrder);
+                stmt.executeUpdate();
+            }
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+         sql = "DELETE FROM rtpiecelist WHERE orderid = ?";
+        try (Connection connection = connectionPool.getConnection())
+        {
+            try (PreparedStatement stmt = connection.prepareStatement(sql))
+            {
+                stmt.setInt(1,idOrder);
+                stmt.executeUpdate();
+            }
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+        sql = "DELETE FROM sfpiecelist WHERE orderid = ?";
+        try (Connection connection = connectionPool.getConnection())
+        {
+            try (PreparedStatement stmt = connection.prepareStatement(sql))
+            {
+                stmt.setInt(1,idOrder);
+                stmt.executeUpdate();
+            }
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+        System.out.println("hi med dig");
+    }
 }
