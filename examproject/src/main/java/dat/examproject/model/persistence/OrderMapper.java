@@ -197,7 +197,7 @@ public class OrderMapper {
         }
     }
     public ArrayList<Order> removeOrder(int idOrder, ArrayList<Order> orders) throws DatabaseException{
-        String sql = "DELETE FROM orders WHERE idcustomer = ?";
+        String sql = "DELETE FROM orders WHERE idorders = ?";
         try (Connection connection = connectionPool.getConnection())
         {
             try (PreparedStatement stmt = connection.prepareStatement(sql))
