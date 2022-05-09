@@ -95,24 +95,20 @@ public class UserMapper implements IUserMapper
 
         String sql = "insert into paycard (idcard, cardnr, expmonth, expyear, cvc) values (?,?,?,?,?)";
 
-        try (Connection connection = connectionPool.getConnection())
-        {
-            try (PreparedStatement ps = connection.prepareStatement(sql))
-            {
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setInt(1, idCard);
                 ps.setInt(2, cardNr);
                 ps.setInt(3, expMonth);
                 ps.setInt(4, expYear);
                 ps.setInt(5, cvc);
                 int rowsAffected = ps.executeUpdate();
-                if (rowsAffected != 1)
-                {
+                if (rowsAffected != 1) {
                     throw new DatabaseException("Dankortet kan ikke bruges");
                 }
             }
         }
-        catch (SQLException ex)
-        {
+        catch (SQLException ex) {
             throw new DatabaseException(ex, "Could not insert username into database 2");
         }
     }
@@ -121,10 +117,26 @@ public class UserMapper implements IUserMapper
     public void createUser(String mail, String password, String name, int phone, String role,
                            int cardNr, int expMonth, int expYear, int cvc) throws DatabaseException
     {
+        String sql = "SELECT * FROM user WHERE mail = ?";
+
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setString(1, mail);
+                ResultSet rs = ps.executeQuery();
+                if(rs.next() == true){
+
+                    throw new DatabaseException("E-mail eksisterer allerede i systemet.\n" +
+                            "Prøv at log ind i stedet");
+                }
+            }
+        }
+        catch (SQLException ex) {
+            throw new DatabaseException(ex, "Could not insert username into database");
+        }
 
         int id = readCustomerList("user").size()+1;
         createCard(id, cardNr, expMonth, expYear, cvc);
-        String sql = "insert into user (iduser, mail, password, name, phone, idcard, role) values (?,?,?,?,?,?,?)";
+        sql = "insert into user (iduser, mail, password, name, phone, idcard, role) values (?,?,?,?,?,?,?)";
 
         try (Connection connection = connectionPool.getConnection())
         {

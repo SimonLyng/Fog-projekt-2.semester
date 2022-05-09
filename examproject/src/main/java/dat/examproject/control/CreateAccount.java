@@ -47,28 +47,26 @@ public class CreateAccount extends HttpServlet {
         session.setAttribute("user", null); // adding empty user object to session scope
         UserMapper userMapper = new UserMapper(connectionPool);
         ArrayList<Order> orders = new ArrayList<>();
-        AddOrder addOrder = new AddOrder();
-        // If any orders has been made, in the time the user has been on the website, this will get those orders
-        // Gets orders
-        if (session.getAttribute("orders") != null) {
-            orders = (ArrayList<Order>) session.getAttribute("orders");
-        }
-        else {
-            session.setAttribute("orders", null);
-        }
-        OrderMapper orderMapper = new OrderMapper(this.connectionPool = new ConnectionPool(USER, PASSWORD, URL));
+        session.setAttribute("orders", null);
 
-        System.out.println("1");
-        int carportBred = Integer.parseInt(request.getParameter("carW"));
-        System.out.println("2");
-        int carportLængde = Integer.parseInt(request.getParameter("carL"));
-        System.out.println("3");
-        int tag = Integer.parseInt(request.getParameter("roof"));
-        System.out.println("4");
-        int skurBred = Integer.parseInt(request.getParameter("shedW"));
-        System.out.println("5");
-        int skurLængde = Integer.parseInt(request.getParameter("shedL"));
-        System.out.println("6");
+        int carportBred = 0;
+        int carportLængde = 0;
+        int tag = 0;
+        int skurBred = 0;
+        int skurLængde = 0;
+
+        OrderMapper orderMapper = new OrderMapper(this.connectionPool = new ConnectionPool(USER, PASSWORD, URL));
+/*        String button = request.getParameter("createButton");
+        System.out.println(button);*/
+        //Sikre sig om hvorvidt request kommer fra index.jsp eller createAccount.jsp
+        if(request.getParameter("pageHidden").equals("index")) {
+            System.out.println("Inde her");
+            carportBred = Integer.parseInt(request.getParameter("carW"));
+            carportLængde = Integer.parseInt(request.getParameter("carL"));
+            tag = Integer.parseInt(request.getParameter("roof"));
+            skurBred = Integer.parseInt(request.getParameter("shedW"));
+            skurLængde = Integer.parseInt(request.getParameter("shedL"));
+        }
 
         String email = request.getParameter("createEmail");
         String password = request.getParameter("createPassword");
@@ -83,17 +81,17 @@ public class CreateAccount extends HttpServlet {
         {
             // Comment: Lav således at, hvis en bruger skriver samme e-mail og adgangskode, kaldes login istedet
             // og hvis en e-mail angives, som allerede eksisterer, skal den lave en exception
-            System.out.println("1");
             userMapper.createUser(email, password, name, phone, "user", cardNr, expMonth, expYear, cvc);
-            System.out.println("2");
             User user = userMapper.login(email, password);
-            System.out.println("3");
             session = request.getSession();
             session.setAttribute("user", user); // adding user object to session scope
             //addOrder.doPost(request, response);
-            Order order = orderMapper.createOrder(user.getIdUser(), carportBred, carportLængde, tag, skurBred, skurLængde);
-            orders.add(order);
-            session.setAttribute("orders", orders);
+            if(request.getParameter("pageHidden").equals("index")) {
+                System.out.println("Også her");
+                Order order = orderMapper.createOrder(user.getIdUser(), carportBred, carportLængde, tag, skurBred, skurLængde);
+                orders.add(order);
+                session.setAttribute("orders", orders);
+            }
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
         catch (DatabaseException e)

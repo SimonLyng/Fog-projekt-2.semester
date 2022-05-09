@@ -41,35 +41,19 @@ public class AddOrder extends HttpServlet
         response.setContentType("text/html");
         HttpSession session = request.getSession();
         ArrayList<Order> orders = new ArrayList<>();
+        session.setAttribute("orders", null);
 
-        // If any orders has been made, in the time the user has been on the website, this will get those orders and the complete orders
-        // Gets complete orders
-
-        // Gets orders
-        if (session.getAttribute("orders") != null) {
-            orders = (ArrayList<Order>) session.getAttribute("orders");
-        }
-        else {
-            session.setAttribute("orders", null);
-        }
 
         OrderMapper orderMapper = new OrderMapper(connectionPool);
         session = request.getSession();
-        System.out.println("1");
-        int carportBred = Integer.parseInt(request.getParameter("carW"));
-        System.out.println("2");
-        int carportLængde = Integer.parseInt(request.getParameter("carL"));
-        System.out.println("3");
-        int tag = Integer.parseInt(request.getParameter("roof"));
-        System.out.println("4");
-        int skurBred = Integer.parseInt(request.getParameter("shedW"));
-        System.out.println("5");
-        int skurLængde = Integer.parseInt(request.getParameter("shedL"));
-        System.out.println("6");
+        int carportBred = Integer.parseInt(request.getParameter("carW2"));
+        int carportLængde = Integer.parseInt(request.getParameter("carL2"));
+        int tag = Integer.parseInt(request.getParameter("roof2"));
+        int skurBred = Integer.parseInt(request.getParameter("shedW2"));
+        int skurLængde = Integer.parseInt(request.getParameter("shedL2"));
         if(session.getAttribute("user") != null){
             User user = (User) session.getAttribute("user");
             try {
-                // Comment: Placeholder createOrder
                 Order order = orderMapper.createOrder(user.getIdUser(), carportBred, carportLængde, tag, skurBred, skurLængde);
                 orders.add(order);
                 session.setAttribute("orders", orders);
@@ -98,7 +82,7 @@ public class AddOrder extends HttpServlet
                 request.getRequestDispatcher("error.jsp").forward(request, response);
             }
         }
-        //request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     public void destroy()

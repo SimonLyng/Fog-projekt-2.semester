@@ -32,213 +32,290 @@
                     <br>
                     Felter markeret * SKAL udfyldes!
                 </p>
-                <form action="createaccount" method="POST">
-                    <br>
-                    <legend>Carport</legend>
-                    <div class="mb-3">
-                        <label for="carW" class="form-label">Bredde</label>
-                        <select id="carW" name="carW" class="form-select">
-                            <option value="" selected>Vælg bredde</option>
-                            <option value="240">240 cm</option>
-                            <option value="270">270 cm</option>
-                            <option value="300">300 cm</option>
-                            <option value="330">330 cm</option>
-                            <option value="360">360 cm</option>
-                            <option value="390">390 cm</option>
-                            <option value="420">420 cm</option>
-                            <option value="450">450 cm</option>
-                            <option value="480">480 cm</option>
-                            <option value="510">510 cm</option>
-                            <option value="540">540 cm</option>
-                            <option value="570">570 cm</option>
-                            <option value="600">600 cm</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="carL" class="form-label">Længde</label>
-                        <select id="carL" name="carL" class="form-select">
-                            <option value="" selected>Vælg længde</option>
-                            <option value="240">240 cm</option>
-                            <option value="270">270 cm</option>
-                            <option value="300">300 cm</option>
-                            <option value="330">330 cm</option>
-                            <option value="360">360 cm</option>
-                            <option value="390">390 cm</option>
-                            <option value="420">420 cm</option>
-                            <option value="450">450 cm</option>
-                            <option value="480">480 cm</option>
-                            <option value="510">510 cm</option>
-                            <option value="540">540 cm</option>
-                            <option value="570">570 cm</option>
-                            <option value="600">600 cm</option>
-                            <option value="630">630 cm</option>
-                            <option value="660">660 cm</option>
-                            <option value="690">690 cm</option>
-                            <option value="720">720 cm</option>
-                            <option value="750">750 cm</option>
-                            <option value="780">780 cm</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="roof" class="form-label">Tag</label>
-                        <select id="roof" name="roof" class="form-select">
-                            <option value="1">Plasttrapezplader</option>
-                            <option value="2" selected>Plasttrapezplader</option>
-                        </select>
-                    </div>
-                    <br>
-                    <legend>Redskabsrum</legend>
-                    <div class="mb-3">
-                        <label class="form-label">Redskabsrum</label>
+                <c:if test="${sessionScope.user == null }">
+                    <form action="createaccount" method="POST">
                         <br>
-                        NB! Der skal beregnes 15 cm tagudhæng på hver side af redskabsrummet*
-                    </div>
-                    <div class="mb-3">
-                        <label for="shedW" class="form-label">Redskabsrum bredde</label>
-                        <select id="shedW" name="shedW" class="form-select">
-                            <option value="" selected>Ønsker ikke redskabsrum</option>
-                            <option value="210">210 cm</option>
-                            <option value="240">240 cm</option>
-                            <option value="270">270 cm</option>
-                            <option value="300">300 cm</option>
-                            <option value="330">330 cm</option>
-                            <option value="360">360 cm</option>
-                            <option value="390">390 cm</option>
-                            <option value="420">420 cm</option>
-                            <option value="450">450 cm</option>
-                            <option value="480">480 cm</option>
-                            <option value="510">510 cm</option>
-                            <option value="540">540 cm</option>
-                            <option value="570">570 cm</option>
-                            <option value="600">600 cm</option>
-                            <option value="630">630 cm</option>
-                            <option value="660">660 cm</option>
-                            <option value="690">690 cm</option>
-                            <option value="720">720 cm</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="shedL" class="form-label">Redskabsrum længde</label>
-                        <select id="shedL" name="shedL" class="form-select">
-                            <option value="" selected>Ønsker ikke redskabsrum</option>
-                            <option value="150">150 cm</option>
-                            <option value="180">180 cm</option>
-                            <option value="210">210 cm</option>
-                            <option value="240">240 cm</option>
-                            <option value="270">270 cm</option>
-                            <option value="300">300 cm</option>
-                            <option value="330">330 cm</option>
-                            <option value="360">360 cm</option>
-                            <option value="390">390 cm</option>
-                            <option value="420">420 cm</option>
-                            <option value="450">450 cm</option>
-                            <option value="480">480 cm</option>
-                            <option value="510">510 cm</option>
-                            <option value="540">540 cm</option>
-                            <option value="570">570 cm</option>
-                            <option value="600">600 cm</option>
-                            <option value="630">630 cm</option>
-                            <option value="660">660 cm</option>
-                            <option value="690">690 cm</option>
-                        </select>
-                    </div>
-                    <br>
-                    <legend>Personlige oplysninger</legend>
-                    <div class="mb-3">
-                        <label for="createEmail" class="form-label">E-mail</label>
-                        <input type="email" class="form-control" id="createEmail" name="createEmail">
-                    </div>
-                    <div class="mb-3">
-                        <label for="createPassword" class="form-label">Adgangskode</label>
-                        <input type="password" class="form-control" id="createPassword" name="createPassword">
-                    </div>
-                    <div class="mb-3">
-                        <label for="createName" class="form-label">Navn</label>
-                        <input type="text" class="form-control" id="createName" name="createName">
-                    </div>
-                    <div class="mb-3">
-                        <label for="createPhone" class="form-label">Telefon nr.</label>
-                        <input type="text" class="form-control" id="createPhone" name="createPhone">
-                    </div>
-                    <div class="mb-3">
-                        <label for="createCardNr" class="form-label">Kort nr.</label>
-                        <input type="number" class="form-control" id="createCardNr" name="createCardNr">
-                    </div>
-                    <div class="mb-3">
-                        <label for="createExpMonth" class="form-label">Kort udløbsdato</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control" id="createExpMonth" name="createExpMonth" placeholder="mm">
-                            <input type="number" class="form-control" id="createExpYear" name="createExpYear" placeholder="yy">
+                        <legend>Carport</legend>
+                        <div class="mb-3">
+                            <label for="carW" class="form-label">Bredde</label>
+                            <select id="carW" name="carW" class="form-select">
+                                <option value="" selected>Vælg bredde</option>
+                                <option value="240">240 cm</option>
+                                <option value="270">270 cm</option>
+                                <option value="300">300 cm</option>
+                                <option value="330">330 cm</option>
+                                <option value="360">360 cm</option>
+                                <option value="390">390 cm</option>
+                                <option value="420">420 cm</option>
+                                <option value="450">450 cm</option>
+                                <option value="480">480 cm</option>
+                                <option value="510">510 cm</option>
+                                <option value="540">540 cm</option>
+                                <option value="570">570 cm</option>
+                                <option value="600">600 cm</option>
+                            </select>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="createCvc" class="form-label">CVC</label>
-                        <input type="number" class="form-control" id="createCvc" name="createCvc">
-                    </div>
-                    <div class="mb-3">
-                        <label for="createAddress" class="form-label">Adresse</label>
-                        <input type="text" class="form-control" id="createAddress" name="createAddress">
-                    </div>
-                    <div class="mb-3">
-                        <label for="createZip" class="form-label">Postnummer og by</label>
-                        <div class="input-group">
-                            <input type="number" class="form-control" id="createZip" name="createZip" placeholder="Post nr.">
-                            <input type="text" class="form-control" id="createCity" name="createCity" placeholder="By">
+                        <div class="mb-3">
+                            <label for="carL" class="form-label">Længde</label>
+                            <select id="carL" name="carL" class="form-select">
+                                <option value="" selected>Vælg længde</option>
+                                <option value="240">240 cm</option>
+                                <option value="270">270 cm</option>
+                                <option value="300">300 cm</option>
+                                <option value="330">330 cm</option>
+                                <option value="360">360 cm</option>
+                                <option value="390">390 cm</option>
+                                <option value="420">420 cm</option>
+                                <option value="450">450 cm</option>
+                                <option value="480">480 cm</option>
+                                <option value="510">510 cm</option>
+                                <option value="540">540 cm</option>
+                                <option value="570">570 cm</option>
+                                <option value="600">600 cm</option>
+                                <option value="630">630 cm</option>
+                                <option value="660">660 cm</option>
+                                <option value="690">690 cm</option>
+                                <option value="720">720 cm</option>
+                                <option value="750">750 cm</option>
+                                <option value="780">780 cm</option>
+                            </select>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputBemærkninger" class="form-label">Evt. bemærkninger</label>
-                        <textarea class="form-control" id="inputBemærkninger" rows="2"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Opret ordre og konto</button>
-                </form>
+                        <div class="mb-3">
+                            <label for="roof" class="form-label">Tag</label>
+                            <select id="roof" name="roof" class="form-select">
+                                <option value="1">Plasttrapezplader</option>
+                                <option value="2" selected>Plasttrapezplader</option>
+                            </select>
+                        </div>
+                        <br>
+                        <legend>Redskabsrum</legend>
+                        <div class="mb-3">
+                            <label class="form-label">Redskabsrum</label>
+                            <br>
+                            NB! Der skal beregnes 15 cm tagudhæng på hver side af redskabsrummet*
+                        </div>
+                        <div class="mb-3">
+                            <label for="shedW" class="form-label">Redskabsrum bredde</label>
+                            <select id="shedW" name="shedW" class="form-select">
+                                <option value="" selected>Ønsker ikke redskabsrum</option>
+                                <option value="210">210 cm</option>
+                                <option value="240">240 cm</option>
+                                <option value="270">270 cm</option>
+                                <option value="300">300 cm</option>
+                                <option value="330">330 cm</option>
+                                <option value="360">360 cm</option>
+                                <option value="390">390 cm</option>
+                                <option value="420">420 cm</option>
+                                <option value="450">450 cm</option>
+                                <option value="480">480 cm</option>
+                                <option value="510">510 cm</option>
+                                <option value="540">540 cm</option>
+                                <option value="570">570 cm</option>
+                                <option value="600">600 cm</option>
+                                <option value="630">630 cm</option>
+                                <option value="660">660 cm</option>
+                                <option value="690">690 cm</option>
+                                <option value="720">720 cm</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="shedL" class="form-label">Redskabsrum længde</label>
+                            <select id="shedL" name="shedL" class="form-select">
+                                <option value="" selected>Ønsker ikke redskabsrum</option>
+                                <option value="150">150 cm</option>
+                                <option value="180">180 cm</option>
+                                <option value="210">210 cm</option>
+                                <option value="240">240 cm</option>
+                                <option value="270">270 cm</option>
+                                <option value="300">300 cm</option>
+                                <option value="330">330 cm</option>
+                                <option value="360">360 cm</option>
+                                <option value="390">390 cm</option>
+                                <option value="420">420 cm</option>
+                                <option value="450">450 cm</option>
+                                <option value="480">480 cm</option>
+                                <option value="510">510 cm</option>
+                                <option value="540">540 cm</option>
+                                <option value="570">570 cm</option>
+                                <option value="600">600 cm</option>
+                                <option value="630">630 cm</option>
+                                <option value="660">660 cm</option>
+                                <option value="690">690 cm</option>
+                            </select>
+                        </div>
+                        <br>
+                        <legend>Personlige oplysninger</legend>
+                        <div class="mb-3">
+                            <label for="createEmail" class="form-label">E-mail</label>
+                            <input type="email" class="form-control" id="createEmail" name="createEmail">
+                        </div>
+                        <div class="mb-3">
+                            <label for="createPassword" class="form-label">Adgangskode</label>
+                            <input type="password" class="form-control" id="createPassword" name="createPassword">
+                        </div>
+                        <div class="mb-3">
+                            <label for="createName" class="form-label">Navn</label>
+                            <input type="text" class="form-control" id="createName" name="createName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="createPhone" class="form-label">Telefon nr.</label>
+                            <input type="text" class="form-control" id="createPhone" name="createPhone">
+                        </div>
+                        <div class="mb-3">
+                            <label for="createCardNr" class="form-label">Kort nr.</label>
+                            <input type="number" class="form-control" id="createCardNr" name="createCardNr">
+                        </div>
+                        <div class="mb-3">
+                            <label for="createExpMonth" class="form-label">Kort udløbsdato</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="createExpMonth" name="createExpMonth" placeholder="mm">
+                                <input type="number" class="form-control" id="createExpYear" name="createExpYear" placeholder="yy">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="createCvc" class="form-label">CVC</label>
+                            <input type="number" class="form-control" id="createCvc" name="createCvc">
+                        </div>
+                        <div class="mb-3">
+                            <label for="createAddress" class="form-label">Adresse</label>
+                            <input type="text" class="form-control" id="createAddress" name="createAddress">
+                        </div>
+                        <div class="mb-3">
+                            <label for="createZip" class="form-label">Postnummer og by</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="createZip" name="createZip" placeholder="Post nr.">
+                                <input type="text" class="form-control" id="createCity" name="createCity" placeholder="By">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputBemærkninger" class="form-label">Evt. bemærkninger</label>
+                            <textarea class="form-control" id="inputBemærkninger" rows="2"></textarea>
+                        </div>
+                        <input type="hidden" name="pageHidden" value="index" />
+                        <button type="submit" class="btn btn-primary">Opret ordre og konto</button>
+                    </form>
+                </c:if>
+                <c:if test="${sessionScope.user != null }">
+                    <form action="addorder" method="POST">
+                        <br>
+                        <legend>Carport</legend>
+                        <div class="mb-3">
+                            <label for="carW2" class="form-label">Bredde</label>
+                            <select id="carW2" name="carW2" class="form-select">
+                                <option value="" selected>Vælg bredde</option>
+                                <option value="240">240 cm</option>
+                                <option value="270">270 cm</option>
+                                <option value="300">300 cm</option>
+                                <option value="330">330 cm</option>
+                                <option value="360">360 cm</option>
+                                <option value="390">390 cm</option>
+                                <option value="420">420 cm</option>
+                                <option value="450">450 cm</option>
+                                <option value="480">480 cm</option>
+                                <option value="510">510 cm</option>
+                                <option value="540">540 cm</option>
+                                <option value="570">570 cm</option>
+                                <option value="600">600 cm</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="carL2" class="form-label">Længde</label>
+                            <select id="carL2" name="carL2" class="form-select">
+                                <option value="" selected>Vælg længde</option>
+                                <option value="240">240 cm</option>
+                                <option value="270">270 cm</option>
+                                <option value="300">300 cm</option>
+                                <option value="330">330 cm</option>
+                                <option value="360">360 cm</option>
+                                <option value="390">390 cm</option>
+                                <option value="420">420 cm</option>
+                                <option value="450">450 cm</option>
+                                <option value="480">480 cm</option>
+                                <option value="510">510 cm</option>
+                                <option value="540">540 cm</option>
+                                <option value="570">570 cm</option>
+                                <option value="600">600 cm</option>
+                                <option value="630">630 cm</option>
+                                <option value="660">660 cm</option>
+                                <option value="690">690 cm</option>
+                                <option value="720">720 cm</option>
+                                <option value="750">750 cm</option>
+                                <option value="780">780 cm</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="roof2" class="form-label">Tag</label>
+                            <select id="roof2" name="roof2" class="form-select">
+                                <option value="1">Plasttrapezplader</option>
+                                <option value="2" selected>Plasttrapezplader</option>
+                            </select>
+                        </div>
+                        <br>
+                        <legend>Redskabsrum</legend>
+                        <div class="mb-3">
+                            <label class="form-label">Redskabsrum</label>
+                            <br>
+                            NB! Der skal beregnes 15 cm tagudhæng på hver side af redskabsrummet*
+                        </div>
+                        <div class="mb-3">
+                            <label for="shedW2" class="form-label">Redskabsrum bredde</label>
+                            <select id="shedW2" name="shedW2" class="form-select">
+                                <option value="" selected>Ønsker ikke redskabsrum</option>
+                                <option value="210">210 cm</option>
+                                <option value="240">240 cm</option>
+                                <option value="270">270 cm</option>
+                                <option value="300">300 cm</option>
+                                <option value="330">330 cm</option>
+                                <option value="360">360 cm</option>
+                                <option value="390">390 cm</option>
+                                <option value="420">420 cm</option>
+                                <option value="450">450 cm</option>
+                                <option value="480">480 cm</option>
+                                <option value="510">510 cm</option>
+                                <option value="540">540 cm</option>
+                                <option value="570">570 cm</option>
+                                <option value="600">600 cm</option>
+                                <option value="630">630 cm</option>
+                                <option value="660">660 cm</option>
+                                <option value="690">690 cm</option>
+                                <option value="720">720 cm</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="shedL2" class="form-label">Redskabsrum længde</label>
+                            <select id="shedL2" name="shedL2" class="form-select">
+                                <option value="" selected>Ønsker ikke redskabsrum</option>
+                                <option value="150">150 cm</option>
+                                <option value="180">180 cm</option>
+                                <option value="210">210 cm</option>
+                                <option value="240">240 cm</option>
+                                <option value="270">270 cm</option>
+                                <option value="300">300 cm</option>
+                                <option value="330">330 cm</option>
+                                <option value="360">360 cm</option>
+                                <option value="390">390 cm</option>
+                                <option value="420">420 cm</option>
+                                <option value="450">450 cm</option>
+                                <option value="480">480 cm</option>
+                                <option value="510">510 cm</option>
+                                <option value="540">540 cm</option>
+                                <option value="570">570 cm</option>
+                                <option value="600">600 cm</option>
+                                <option value="630">630 cm</option>
+                                <option value="660">660 cm</option>
+                                <option value="690">690 cm</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="mb-3">
+                            <label for="inputBemærkninger2" class="form-label">Evt. bemærkninger</label>
+                            <textarea class="form-control" id="inputBemærkninger2" rows="2"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Opret ordre</button>
+                    </form>
+                </c:if>
             </div>
         </div>
-        <%-- Comment: Kunne bruge <c:if test="${sessionScope.user == null }"> så bruger ikke skal
-        indtaste e-mail etc. hvis de allerede er logget ind, eneste problem er, submit button --%>
-
-<%--        <c:if test="${sessionScope.user =! null }">
-            <form action="addorder" method="post">
-                Ønsket carport mål:
-                <div class="row mb-3">
-                    <label for="carBred" class="col-sm-2 col-form-label">Carport bredde: </label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="carBred" name="carBred"/>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="carLæng" class="col-sm-2 col-form-label">Carport længde: </label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="carLæng" name="carLæng"/>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="tag" class="col-sm-2 col-form-label">Tag: </label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="tag" name="tag"/>
-                    </div>
-                </div>
-                Redskabsrum:
-                NB! Der skal beregnes 15 cm tagudhæng på hver side af redskabsrummet*
-                <div class="row mb-3">
-                    <label for="redBred" class="col-sm-2 col-form-label">Redskabsrum bredde: </label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="redBred" name="redBred"/>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="redLæng" class="col-sm-2 col-form-label">Redskabsrum længde: </label>
-                    <div class="col-sm-10">
-                        <input type="number" class="form-control" id="redLæng" name="redLæng"/>
-                    </div>
-                </div>
-                <div class="row mb-3 justify-content-center">
-                    <div class="col-sm-3">
-                        <input type="submit" class="btn btn-primary" value="Opret ordre"/>
-                    </div>
-                </div>
-            </form>
-        </c:if>--%>
     </jsp:body>
 
 </t:pagetemplate>

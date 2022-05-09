@@ -57,6 +57,7 @@
                     <input type="number" class="form-control" id="createCvc" name="createCvc"/>
                 </div>
             </div>
+            <input type="hidden" name="pageHidden" value="createHidden" />
             <div class="row mb-3 justify-content-center">
                 <div class="col-sm-3">
                     <input type="submit" class="btn btn-primary" value="Opret konto"/>
