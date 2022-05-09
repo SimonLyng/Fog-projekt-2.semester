@@ -29,10 +29,6 @@ public class CreateAccount extends HttpServlet {
         this.connectionPool = ApplicationStart.getConnectionPool();
     }
 
-    private static String USER = "root";
-    private static String PASSWORD = "Dreng127";
-    private static String URL = "jdbc:mysql://localhost:3306/testing";
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
     {
         // You shouldn't end up here with a GET-request, thus you get sent back to frontpage
@@ -55,7 +51,7 @@ public class CreateAccount extends HttpServlet {
         int skurBred = 0;
         int skurLængde = 0;
 
-        OrderMapper orderMapper = new OrderMapper(this.connectionPool = new ConnectionPool(USER, PASSWORD, URL));
+        OrderMapper orderMapper = new OrderMapper(connectionPool);
 /*        String button = request.getParameter("createButton");
         System.out.println(button);*/
         //Sikre sig om hvorvidt request kommer fra index.jsp eller createAccount.jsp
