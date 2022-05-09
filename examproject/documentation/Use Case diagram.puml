@@ -1,0 +1,40 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+left to right direction
+
+rectangle Fog-Webside {
+    usecase "Log ind" as kundeU1
+    usecase "Opret en ordre" as adminU1
+    usecase "Opret forespørgelse uden konto" as kundeU2
+    usecase "Se alle forespørgelser og ordre" as adminU2
+    usecase "Se egen igangværende og færdige ordre" as kundeU3
+    usecase "Rediger en ordre" as adminU3
+    usecase "Fjern en ordre" as adminU4
+    usecase "Se billeder og vejledene beløb af en \n ordre inden forspørgelsen bliver sendt" as kundeU4
+    usecase "Se stykliste efter ordren er godkendt \n og betalingen er gået igennem" as kundeU5
+    usecase "Send en automatiseret ordrebekræftigelse" as adminU5
+}
+
+:Kunde: as Kunde
+Kunde --> kundeU1
+Admin --> adminU1
+Kunde --> kundeU2
+Admin --> adminU2
+Kunde --> kundeU3
+Admin --> adminU3
+Admin --> adminU4
+Kunde --> kundeU4
+Kunde --> kundeU5
+Admin --> adminU5
+kundeU1 <-- System
+kundeU2 <-- System
+kundeU3 <-- System
+kundeU4 <-- System
+kundeU5 <-- System
+adminU1 <-- System
+adminU2 <-- System
+adminU3 <-- System
+adminU4 <-- System
+adminU5 <-- System
+
+@enduml
