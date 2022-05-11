@@ -1,8 +1,10 @@
 package dat.examproject.persistence;
 
+import dat.examproject.model.entities.Order;
 import dat.examproject.model.entities.User;
 import dat.examproject.model.exceptions.DatabaseException;
 import dat.examproject.model.persistence.ConnectionPool;
+import dat.examproject.model.persistence.OrderMapper;
 import dat.examproject.model.persistence.UserMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,21 +13,18 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserMapperTest
 {
-    private final static String USER = "root";
-    private final static String PASSWORD = "Dreng127";
-    private final static String URL = "jdbc:mysql://localhost:3306/testing?serverTimezone=CET&allowPublicKeyRetrieval=true&useSSL=false";
-
     private static ConnectionPool connectionPool;
     private static UserMapper userMapper;
 
     @BeforeAll
     public static void setUpClass() {
-        connectionPool = new ConnectionPool(USER, PASSWORD, URL);
+        connectionPool = new ConnectionPool();
         userMapper = new UserMapper(connectionPool);
     }
 
@@ -89,5 +88,10 @@ class UserMapperTest
         //assertEquals(expectedUser, newUser);
         assertEquals(expectedUser, logInUser);
 
+    }
+    @Test
+    void UpdateStatusOrder() throws DatabaseException {
+        OrderMapper orderMapper = new OrderMapper(connectionPool);
+        ArrayList<Order> orders = orderMapper.updateStatusOrders("Started", 1);
     }
 }

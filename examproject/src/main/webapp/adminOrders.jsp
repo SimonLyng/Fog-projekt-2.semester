@@ -35,6 +35,11 @@
                             <td> <form method="post" action="removeorder">
                                 <input type="submit" id="Fjern" name="OrderID" value="${Integer.parseInt(order.getIdOrder())}"/>
                             </form></td>
+                            <td> <form method="post" action="updatestatusorder">
+                                <input type="hidden" name="status" value="${order.getOrderStatus()}" />
+                                <input type="submit" id="updatestatusorder" name="OrderID" value="${Integer.parseInt(order.getIdOrder())}"/>
+                            </form></td>
+
                         </tr>
                     </c:if>
                 </c:forEach>

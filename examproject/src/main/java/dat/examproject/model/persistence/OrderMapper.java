@@ -181,6 +181,33 @@ public class OrderMapper {
         }
     }
 
+    public ArrayList<Order> updateStatusOrders(String statuS, int idOrder) throws DatabaseException {
+        String sql = "UPDATE orders SET status = ? WHERE idorders = ?";
+        String newStatus = statuS;
+        ArrayList<Order> output = new ArrayList<>();
+        if ( newStatus.equals("Started") ){
+          newStatus = "Påbegyndt";
+        }
+        else {
+            newStatus = "Færdigt";
+        }
+        try (Connection connection = connectionPool.getConnection())
+        {
+            try (PreparedStatement stmt = connection.prepareStatement(sql))
+            {
+                stmt.setString(1, newStatus);
+                stmt.setInt(2, idOrder);
+                stmt.executeUpdate();
+            }
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }
+        output = getAllOrders();
+        return output;
+    }
+
     public void updatePayment(int idCustommer){
         String sql = "UPDATE orders SET payment = 'paid' WHERE idcustomer = ?";
         try (Connection connection = connectionPool.getConnection())
