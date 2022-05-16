@@ -159,22 +159,22 @@
                         </div>
                         <div class="mb-3">
                             <label for="createPhone" class="form-label">Telefon nr.</label>
-                            <input type="text" class="form-control" id="createPhone" name="createPhone">
+                            <input type="text" class="form-control" id="createPhone" name="createPhone" maxlength="8" minlength="8">
                         </div>
                         <div class="mb-3">
                             <label for="createCardNr" class="form-label">Kort nr.</label>
-                            <input type="number" class="form-control" id="createCardNr" name="createCardNr">
+                            <input type="text" class="form-control" id="createCardNr" name="createCardNr" maxlength="16" minlength="16">
                         </div>
                         <div class="mb-3">
                             <label for="createExpMonth" class="form-label">Kort udløbsdato</label>
                             <div class="input-group">
-                                <input type="number" class="form-control" id="createExpMonth" name="createExpMonth" placeholder="mm">
-                                <input type="number" class="form-control" id="createExpYear" name="createExpYear" placeholder="yy">
+                                <input type="text" class="form-control" id="createExpMonth" name="createExpMonth" maxlength="2" minlength="2" placeholder="mm">
+                                <input type="text" class="form-control" id="createExpYear" name="createExpYear" maxlength="2" minlength="2" placeholder="yy">
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="createCvc" class="form-label">CVC</label>
-                            <input type="number" class="form-control" id="createCvc" name="createCvc">
+                            <input type="text" class="form-control" id="createCvc" maxlength="3" minlength="3" name="createCvc">
                         </div>
                         <div class="mb-3">
                             <label for="createAddress" class="form-label">Adresse</label>
@@ -183,7 +183,7 @@
                         <div class="mb-3">
                             <label for="createZip" class="form-label">Postnummer og by</label>
                             <div class="input-group">
-                                <input type="number" class="form-control" id="createZip" name="createZip" minlength="4" maxlength="4" placeholder="Post nr.">
+                                <input type="text" class="form-control" id="createZip" name="createZip" maxlength="4" minlength="4" placeholder="Post nr.">
                                 <input type="text" class="form-control" id="createCity" name="createCity" placeholder="By">
                             </div>
                         </div>
