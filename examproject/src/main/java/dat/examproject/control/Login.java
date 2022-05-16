@@ -33,8 +33,8 @@ public class Login extends HttpServlet
     }
 
     // Comment: change USER, URL & Password to the correct database, when that's done
-    private static String USER = "root";
-    private static String PASSWORD = "Dreng127";
+    private static String USER = "fogdb";
+    private static String PASSWORD = "fog";
     private static String URL = "jdbc:mysql://localhost:3306/testing";
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
