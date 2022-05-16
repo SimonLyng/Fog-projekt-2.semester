@@ -19,12 +19,13 @@ public class Calculator {
     public int calPost(int objectLength, boolean shed){ // Udregner til Stolper
         // Starter med 4, hvis der er skur på, skal der være 4 ekstra, og så skal der sættes 2 ind per 3-3,3 meter
         double length = (double) objectLength/100;
-        int post = 5; // Starts of as 4, because there is a minimum of 5 posts
+        int post = 4; // Starts of as 4, because there is a minimum of 5 posts
         double extraPosts = 0.0;
         if(shed == true){ // If there is a shed connected, add 4 extra posts
-            post += 4;
+            post += 5;
             extraPosts = floor((length-(2.5*widthPiece))/3.3)*2;
         }
+        // 780-()
         else {
             extraPosts = floor((length-(4*widthPiece))/3.3)*2;
         }

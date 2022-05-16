@@ -45,7 +45,14 @@ public class CreateAccount extends HttpServlet {
         session.setAttribute("user", null); // adding empty user object to session scope
         UserMapper userMapper = new UserMapper(connectionPool);
         ArrayList<Order> orders = new ArrayList<>();
-        session.setAttribute("orders", null);
+        // If any orders has been made, in the time the user has been on the website, this will get those orders
+        // Gets orders
+        if (session.getAttribute("orders") != null) {
+            orders = (ArrayList<Order>) session.getAttribute("orders");
+        }
+        else {
+            session.setAttribute("orders", null);
+        }
 
         int carportBred = 0;
         int carportLængde = 0;

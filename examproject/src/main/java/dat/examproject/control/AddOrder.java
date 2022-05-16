@@ -43,8 +43,14 @@ public class AddOrder extends HttpServlet
         response.setContentType("text/html");
         HttpSession session = request.getSession();
         ArrayList<Order> orders = new ArrayList<>();
-        session.setAttribute("orders", null);
-
+        // If any orders has been made, in the time the user has been on the website, this will get those orders
+        // Gets orders
+        if (session.getAttribute("orders") != null) {
+            orders = (ArrayList<Order>) session.getAttribute("orders");
+        }
+        else {
+            session.setAttribute("orders", null);
+        }
 
         OrderMapper orderMapper = new OrderMapper(connectionPool);
         StykListMapper stykListMapper = new StykListMapper(connectionPool);

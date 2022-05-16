@@ -183,7 +183,7 @@
                         <div class="mb-3">
                             <label for="createZip" class="form-label">Postnummer og by</label>
                             <div class="input-group">
-                                <input type="number" class="form-control" id="createZip" name="createZip" placeholder="Post nr.">
+                                <input type="number" class="form-control" id="createZip" name="createZip" minlength="4" maxlength="4" placeholder="Post nr.">
                                 <input type="text" class="form-control" id="createCity" name="createCity" placeholder="By">
                             </div>
                         </div>
