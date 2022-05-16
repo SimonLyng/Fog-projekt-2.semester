@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -95,6 +96,7 @@ public class CreateAccount extends HttpServlet {
             if(request.getParameter("pageHidden").equals("index")) {
                 System.out.println("Også her");
                 Order order = orderMapper.createOrder(user.getIdUser(), carportBred, carportLængde, tag, skurBred, skurLængde);
+                order.setDate(orderMapper.orderDate(order.getIdOrder()));
                 orders.add(order);
                 session.setAttribute("orders", orders);
                 stykListMapper.createStykList(user.getIdUser(), carportLængde, carportBred, skurLængde, skurBred);

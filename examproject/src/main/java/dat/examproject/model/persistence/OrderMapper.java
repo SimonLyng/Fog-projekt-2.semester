@@ -5,12 +5,12 @@ import dat.examproject.model.exceptions.DatabaseException;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class OrderMapper {
     ConnectionPool connectionPool;
 
-    public OrderMapper(ConnectionPool connectionPool)
-    {
+    public OrderMapper(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
@@ -51,7 +51,7 @@ public class OrderMapper {
         return orders;
     }
 
-    public ArrayList<Order> getAllOrders() throws DatabaseException{
+    public ArrayList<Order> getAllOrders() throws DatabaseException {
         ArrayList<Order> orders = new ArrayList<>();
         Order order;
 
@@ -91,20 +91,17 @@ public class OrderMapper {
         return orders;
     }
 
-    public Order createOrder(int idcustomer, int carW, int carL, int rooF, int shedW, int shedL) throws DatabaseException
-    {
+    public Order createOrder(int idcustomer, int carW, int carL, int rooF, int shedW, int shedL) throws DatabaseException {
         Order order;
         String status = "Started";
 
         String sql = "insert into orders (idcustomer, carw, carl, roof, shedw, shedl) values (?,?,?,?,?,?)";
-        try (Connection connection = connectionPool.getConnection())
-        {
-            try (Statement stmt = connection.createStatement()){
+        try (Connection connection = connectionPool.getConnection()) {
+            try (Statement stmt = connection.createStatement()) {
                 String sql2 = "alter table orders AUTO_INCREMENT = 1";
                 stmt.execute(sql2);
             }
-            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
-            {
+            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 // Comment: Change so it reads from database, when db has been created
                 ps.setInt(1, idcustomer);
                 // Comment: Has to be changed, either by storing lists or making more tables
@@ -119,9 +116,7 @@ public class OrderMapper {
                 int idorder = rs.getInt(1);
                 order = new Order(idorder, idcustomer, carW, carL, rooF, shedW, shedL, status);
             }
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             throw new DatabaseException(ex, "Could not insert order into database");
         }
         return order;
@@ -164,19 +159,15 @@ public class OrderMapper {
 //        return stykList;
 //    }
 
-    public void updateOrders(int idCustommer, int idOrder){
+    public void updateOrders(int idCustommer, int idOrder) {
         String sql = "UPDATE orders SET idcustomer = ? WHERE idorder = ?";
-        try (Connection connection = connectionPool.getConnection())
-        {
-            try (PreparedStatement stmt = connection.prepareStatement(sql))
-            {
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
                 stmt.setInt(1, idCustommer);
                 stmt.setInt(2, idOrder);
                 stmt.executeUpdate();
             }
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
@@ -185,86 +176,90 @@ public class OrderMapper {
         String sql = "UPDATE orders SET status = ? WHERE idorders = ?";
         String newStatus = statuS;
         ArrayList<Order> output = new ArrayList<>();
-        if ( newStatus.equals("Started") ){
-          newStatus = "Påbegyndt";
-        }
-        else {
+        if (newStatus.equals("Started")) {
+            newStatus = "Påbegyndt";
+        } else {
             newStatus = "Færdigt";
         }
-        try (Connection connection = connectionPool.getConnection())
-        {
-            try (PreparedStatement stmt = connection.prepareStatement(sql))
-            {
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
                 stmt.setString(1, newStatus);
                 stmt.setInt(2, idOrder);
                 stmt.executeUpdate();
             }
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
         output = getAllOrders();
         return output;
     }
 
-    public void updatePayment(int idCustommer){
+    public void updatePayment(int idCustommer) {
         String sql = "UPDATE orders SET payment = 'paid' WHERE idcustomer = ?";
-        try (Connection connection = connectionPool.getConnection())
-        {
-            try (PreparedStatement stmt = connection.prepareStatement(sql))
-            {
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
                 stmt.setInt(1, idCustommer);
                 stmt.executeUpdate();
             }
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-    public ArrayList<Order> removeOrder(int idOrder, ArrayList<Order> orders) throws DatabaseException{
+
+    public ArrayList<Order> removeOrder(int idOrder, ArrayList<Order> orders) throws DatabaseException {
         String sql = "DELETE FROM orders WHERE idorders = ?";
-        try (Connection connection = connectionPool.getConnection())
-        {
-            try (PreparedStatement stmt = connection.prepareStatement(sql))
-            {
-                stmt.setInt(1,idOrder);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+                stmt.setInt(1, idOrder);
                 stmt.executeUpdate();
             }
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             throw new DatabaseException(ex, "Noget");
         }
-         sql = "DELETE FROM rtpiecelist WHERE orderid = ?";
-        try (Connection connection = connectionPool.getConnection())
-        {
-            try (PreparedStatement stmt = connection.prepareStatement(sql))
-            {
-                stmt.setInt(1,idOrder);
+        sql = "DELETE FROM rtpiecelist WHERE orderid = ?";
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+                stmt.setInt(1, idOrder);
                 stmt.executeUpdate();
             }
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             throw new DatabaseException(ex, "Noget");
         }
         sql = "DELETE FROM sfpiecelist WHERE orderid = ?";
-        try (Connection connection = connectionPool.getConnection())
-        {
-            try (PreparedStatement stmt = connection.prepareStatement(sql))
-            {
-                stmt.setInt(1,idOrder);
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+                stmt.setInt(1, idOrder);
                 stmt.executeUpdate();
             }
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             throw new DatabaseException(ex, "Noget");
         }
         orders.removeIf(order -> order.getIdOrder() == idOrder);
         System.out.println("hi med dig");
         return orders;
     }
+
+    public java.util.Date orderDate(int orderid) throws DatabaseException {
+        java.util.Date date = new java.util.Date();
+        Calendar calendar = Calendar.getInstance();
+        //java.sql.Date sqlDate = new java.sql.Date(date.getda);
+        String sql = "INSERT into date (day,month,year) values (?,?,?)";
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+                stmt.setInt(1, calendar.get(Calendar.DATE));
+                stmt.setInt(2, calendar.get(Calendar.MONTH));
+                stmt.setInt(3, calendar.get(Calendar.YEAR));
+                //dag
+                //måned
+                //år
+                stmt.setInt(2, orderid);
+                stmt.executeUpdate();
+
+            }
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex, "dato fejl");
+        }
+        return date;
+    }
+
 }

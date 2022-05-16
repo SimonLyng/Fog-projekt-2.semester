@@ -92,6 +92,7 @@
                                 <td>${order.skurBred}</td>
                                 <td>${order.skurLængde}</td>
                                 <td>${order.tag}</td>
+                                <td>${order.getDate()}</td>
                                 <c:if test="${order.orderStatus.equals('Started')}">
                                     <td>
                                         <button class="btn btn-primary" onclick="startEditOrder(${order.idOrder})">

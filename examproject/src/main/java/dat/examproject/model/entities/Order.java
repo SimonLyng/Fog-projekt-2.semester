@@ -1,6 +1,7 @@
 package dat.examproject.model.entities;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Order {
     private int idOrder;
@@ -11,6 +12,7 @@ public class Order {
     private int skurBred;
     private int skurLængde;
     private String orderStatus;
+    private Date date;
     // Include price and maybe some reference to a list of pieces
 
 
@@ -26,6 +28,14 @@ public class Order {
     }
 
 
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
     public int getIdOrder() {
         return idOrder;
     }
