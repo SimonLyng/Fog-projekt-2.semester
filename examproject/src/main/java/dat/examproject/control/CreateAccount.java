@@ -2,10 +2,12 @@ package dat.examproject.control;
 
 import dat.examproject.model.config.ApplicationStart;
 import dat.examproject.model.entities.Order;
+import dat.examproject.model.entities.StykList;
 import dat.examproject.model.entities.User;
 import dat.examproject.model.exceptions.DatabaseException;
 import dat.examproject.model.persistence.ConnectionPool;
 import dat.examproject.model.persistence.OrderMapper;
+import dat.examproject.model.persistence.StykListMapper;
 import dat.examproject.model.persistence.UserMapper;
 
 import javax.servlet.ServletException;
@@ -52,6 +54,7 @@ public class CreateAccount extends HttpServlet {
         int skurLængde = 0;
 
         OrderMapper orderMapper = new OrderMapper(connectionPool);
+        StykListMapper stykListMapper = new StykListMapper(connectionPool);
 /*        String button = request.getParameter("createButton");
         System.out.println(button);*/
         //Sikre sig om hvorvidt request kommer fra index.jsp eller createAccount.jsp
@@ -87,8 +90,15 @@ public class CreateAccount extends HttpServlet {
                 Order order = orderMapper.createOrder(user.getIdUser(), carportBred, carportLængde, tag, skurBred, skurLængde);
                 orders.add(order);
                 session.setAttribute("orders", orders);
+                stykListMapper.createStykList(user.getIdUser(), carportLængde, carportBred, skurLængde, skurBred);
+                StykList stykList = stykListMapper.readStykList(user.getIdUser());
+                session.setAttribute("rt", stykList.getRtList());
+                session.setAttribute("sf", stykList.getSfList());
+                request.getRequestDispatcher("orders.jsp").forward(request, response);
             }
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            else {
+                request.getRequestDispatcher("index.jsp").forward(request, response);
+            }
         }
         catch (DatabaseException e)
         {

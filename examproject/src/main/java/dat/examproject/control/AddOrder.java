@@ -2,10 +2,12 @@ package dat.examproject.control;
 
 import dat.examproject.model.config.ApplicationStart;
 import dat.examproject.model.entities.Order;
+import dat.examproject.model.entities.StykList;
 import dat.examproject.model.entities.User;
 import dat.examproject.model.exceptions.DatabaseException;
 import dat.examproject.model.persistence.OrderMapper;
 import dat.examproject.model.persistence.ConnectionPool;
+import dat.examproject.model.persistence.StykListMapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,44 +47,31 @@ public class AddOrder extends HttpServlet
 
 
         OrderMapper orderMapper = new OrderMapper(connectionPool);
+        StykListMapper stykListMapper = new StykListMapper(connectionPool);
+
         session = request.getSession();
         int carportBred = Integer.parseInt(request.getParameter("carW2"));
         int carportLængde = Integer.parseInt(request.getParameter("carL2"));
         int tag = Integer.parseInt(request.getParameter("roof2"));
         int skurBred = Integer.parseInt(request.getParameter("shedW2"));
         int skurLængde = Integer.parseInt(request.getParameter("shedL2"));
-        if(session.getAttribute("user") != null){
-            User user = (User) session.getAttribute("user");
-            try {
-                Order order = orderMapper.createOrder(user.getIdUser(), carportBred, carportLængde, tag, skurBred, skurLængde);
-                orders.add(order);
-                session.setAttribute("orders", orders);
-            }
-            catch (DatabaseException e)
-            {
-                Logger.getLogger("web").log(Level.SEVERE, e.getMessage());
-                request.setAttribute("errormessage", e.getMessage());
-                request.getRequestDispatcher("error.jsp").forward(request, response);
-            }
+        User user = (User) session.getAttribute("user");
+        try {
+            Order order = orderMapper.createOrder(user.getIdUser(), carportBred, carportLængde, tag, skurBred, skurLængde);
+            orders.add(order);
+            session.setAttribute("orders", orders);
+            stykListMapper.createStykList(user.getIdUser(), carportLængde, carportBred, skurLængde, skurBred);
+            StykList stykList = stykListMapper.readStykList(user.getIdUser());
+            session.setAttribute("rt", stykList.getRtList());
+            session.setAttribute("sf", stykList.getSfList());
         }
-        else{
-            try {
-                // Comment: Lav det om, så brugeren automatisk logger ind / opretter konto, ved oprettelse af forespørgsel
-                // tjek først om brugeren eksisterer i systemet -> kald derefter på Login/Create account, baseret på om brugeren
-                // Eksisterede i systemet eller ikke -> Tilføj dernæst ordren til den bruger
-                // Comment: Placeholder createOrder
-                Order order = orderMapper.createOrder(0, carportBred, carportLængde, tag, skurBred, skurLængde);
-                orders.add(order);
-                session.setAttribute("orders", orders);
-            }
-            catch (DatabaseException e)
-            {
-                Logger.getLogger("web").log(Level.SEVERE, e.getMessage());
-                request.setAttribute("errormessage", e.getMessage());
-                request.getRequestDispatcher("error.jsp").forward(request, response);
-            }
+        catch (DatabaseException e)
+        {
+            Logger.getLogger("web").log(Level.SEVERE, e.getMessage());
+            request.setAttribute("errormessage", e.getMessage());
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("orders.jsp").forward(request, response);
     }
 
     public void destroy()

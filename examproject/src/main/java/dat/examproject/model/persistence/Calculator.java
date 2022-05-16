@@ -16,8 +16,9 @@ public class Calculator {
     // 45x195 mm. spærtræ ubh. gives 2 af, enten af længden 480 eller 600, afængig af carporterns længde
     // 25x200 mm. trykkimp. Brædt: 2 stk. per 360
     double widthPiece = 0.55;
-    public double calPost(double length, boolean shed){ // Udregner til Stolper
+    public int calPost(int objectLength, boolean shed){ // Udregner til Stolper
         // Starter med 4, hvis der er skur på, skal der være 4 ekstra, og så skal der sættes 2 ind per 3-3,3 meter
+        double length = (double) objectLength/100;
         int post = 5; // Starts of as 4, because there is a minimum of 5 posts
         double extraPosts = 0.0;
         if(shed == true){ // If there is a shed connected, add 4 extra posts
@@ -28,40 +29,97 @@ public class Calculator {
             extraPosts = floor((length-(4*widthPiece))/3.3)*2;
         }
         System.out.println(extraPosts);
-        return post+extraPosts;
+        return (int) (post+extraPosts);
     }
 
-    public double calRafters(double length){ // Udregner til spær
+    public int calRafters(int objectLength){ // Udregner til spær
         int rafters = 2; // There is at least 2 rafters, 1 in each end
+        double length = (double) objectLength/100;
         double extraRafters = floor(length/(widthPiece+0.045));
-        System.out.println(extraRafters);
-        return rafters+extraRafters;
+        System.out.println(rafters+extraRafters);
+        return (int) (rafters+extraRafters);
     }
 
-    public double calShedBoards(double length, double width){ // Udregner til bræder til skur
+    public int calShedBoards(int objectLength, int objectWidth){ // Udregner til bræder til skur
+        double length = (double) objectLength/100;
+        double width = (double) objectWidth/100;
         double lengthBoards = length*0.2; // Der går 10 bræder på hver meter, og der er 2 sider = 0.2
         double widthBoards = width*0.2; // -||-
-        double total = ceil(lengthBoards+widthBoards)*100; // Sælger kun bundter af 100 (så vidt ses), derfor denne ligning
+        int total = (int) ceil(lengthBoards+widthBoards)*100; // Sælger kun bundter af 100 (så vidt ses), derfor denne ligning
         return total;
+    }
+
+    public Map<String, Integer> calRemme(int objectLength){
+        Map<String, Integer> output = new TreeMap<>();
+        double length = (double) objectLength/100;
+        double tempLengh = 0;
+        int countLong = 0;
+        int countShort = 0;
+        while (tempLengh == 0 || tempLengh < length) {
+            if (tempLengh + 4.8 >= length) {
+                countShort++;
+                break;
+            } else if (tempLengh + 6.0 >= length) {
+                countLong++;
+                break;
+            } else {
+                countLong++;
+                tempLengh += 6.0;
+            }
+        }
+        output.put("long", countLong);
+        output.put("short", countShort);
+        return output;
+    }
+
+    public Map<String, Integer> calRemmeShed(int objectLength, int lengthLong, int lengthShort, int times){
+        Map<String, Integer> output = new TreeMap<>();
+        double materialLengthShort = (double) lengthShort/100;
+        double materialLengthLong = (double) lengthLong/100;
+        double length = (double) objectLength/100;
+        double tempLengh = 0;
+        int countLong = 0;
+        int countShort = 0;
+        while(tempLengh == 0 || tempLengh < length){
+            if(materialLengthShort > length*2){
+                countShort++;
+                break;
+            }
+            else if(materialLengthLong > length*2){
+                countLong++;
+                break;
+            }
+            else{
+                countLong++;
+                tempLengh +=materialLengthLong;
+            }
+        }
+        output.put("long", countLong * times);
+        output.put("short", countShort * times);
+        return output;
     }
 
     // Løsholter gavl = gang resultat af bræder med 6
     // Løsholter side = gange resultat af bræder med 4
     // Stern af alle varianter = gange resultat af bræder med 2 (med undtagelse af overstærnsbrædder til forenden)
 
-    public Map<String, Double> calLooseWoodGavl(double length, double materialLengthLong, double materialLengthShort,
-                                                int times) { // Udregner til løsholter til skur (gavl)
-        Map<String, Double> output = new TreeMap<>();
+    public Map<String, Integer> calMultiple(int objectLength, int lengthLong, int lengthShort,
+                                                int times) { // Udregner til alle sternbrædder og løsholter
+        Map<String, Integer> output = new TreeMap<>();
+        double materialLengthShort = (double) lengthShort/100;
+        double materialLengthLong = (double) lengthLong/100;
+        double length = (double) objectLength/100;
         double tempLengh = 0;
-        double countLong = 0;
-        double countShort = 0;
+        int countLong = 0;
+        int countShort = 0;
         while (tempLengh == 0 || tempLengh < length) {
+            System.out.println(tempLengh);
             if ((tempLengh + materialLengthShort) >= length) {
                 countShort++;
-                break;
-            } else if (countLong == 0 && (tempLengh + (materialLengthShort * 2)) >= length) {
+                tempLengh += materialLengthShort;
+            } else if (countLong == 0 && tempLengh + (materialLengthShort * 2) >= length && tempLengh + materialLengthLong < length) {
                 countShort += 2;
-                break;
+                tempLengh += materialLengthShort*2;
             } else {
                 countLong++;
                 tempLengh += materialLengthLong;
@@ -72,8 +130,10 @@ public class Calculator {
         return output;
     }
 
-    public Map<String, Double> calRoof(double width, double length){
-        Map<String, Double> output = new TreeMap<>();
+    public Map<String, Integer> calRoof(int objectWidth, int objectLength){
+        Map<String, Integer> output = new TreeMap<>();
+        double width = (double) objectWidth/100;
+        double length = (double) objectLength/100;
         double roofL = 6.0;
         double roofS = 3.6;
         double roofWidth = 0.8125;
@@ -96,19 +156,21 @@ public class Calculator {
             }
                 tempKvm2 += roofWidth;
         }
-        output.put("long", ceil(countfL));
-        output.put("short", ceil(countfS));
+        output.put("long", (int) ceil(countfL));
+        output.put("short", (int) ceil(countfS));
         return output;
     }
 
-    public Map<Integer, Double> calScrews(double width, double length){
-        Map<Integer, Double> output = new TreeMap<>();
+    public ArrayList<Integer> calScrews(int objectWidth, int objectLength){
+        double width = (double) objectWidth/100;
+        double length = (double) objectLength/100;
+        ArrayList<Integer> output = new ArrayList<>();
         ArrayList<Integer> amounts = new ArrayList<>(
                 Arrays.asList(3,2,15,15,1,3,18,12,2,2,1,2,32)
         );
 
         for(int i = 0; i < amounts.size(); i++){
-            output.put(i+1, ceil((amounts.get(i)/46.8)*(width*length)));
+            output.add((int) ceil((amounts.get(i)/46.8)*(width*length)));
         }
         return output;
     }

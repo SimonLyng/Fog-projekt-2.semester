@@ -2,9 +2,11 @@ package dat.examproject.control;
 
 import dat.examproject.model.config.ApplicationStart;
 import dat.examproject.model.entities.Order;
+import dat.examproject.model.entities.StykList;
 import dat.examproject.model.entities.User;
 import dat.examproject.model.exceptions.DatabaseException;
 import dat.examproject.model.persistence.OrderMapper;
+import dat.examproject.model.persistence.StykListMapper;
 import dat.examproject.model.persistence.UserMapper;
 import dat.examproject.model.persistence.ConnectionPool;
 
@@ -48,6 +50,7 @@ public class Login extends HttpServlet
         HttpSession session = request.getSession();
         session.setAttribute("user", null); // adding empty user object to session scope
         UserMapper userMapper = new UserMapper(connectionPool);
+        StykListMapper stykListMapper = new StykListMapper(connectionPool);
         ArrayList<Order> orders = new ArrayList<>();
         ArrayList<User> customers;
 
@@ -76,6 +79,9 @@ public class Login extends HttpServlet
                 }
                 ArrayList<Order> previousOrders = orderMapper.getOrders(user.getIdUser());
                 session.setAttribute("orders", previousOrders);
+                StykList stykList = stykListMapper.readStykList(user.getIdUser());
+                session.setAttribute("rt", stykList.getRtList());
+                session.setAttribute("sf", stykList.getSfList());
             }
             else if(user.getRole().equalsIgnoreCase("admin")){
                 ArrayList<Order> allOrders = orderMapper.getAllOrders();

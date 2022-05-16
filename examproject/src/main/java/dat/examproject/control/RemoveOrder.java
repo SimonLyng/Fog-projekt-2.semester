@@ -59,6 +59,11 @@ public class RemoveOrder extends HttpServlet {
             request.setAttribute("errormessage", e.getMessage());
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("adminOrders.jsp").forward(request, response);
+        if(request.getParameter("pageHidden").equals("orders")) {
+            request.getRequestDispatcher("orders.jsp").forward(request, response);
+        }
+        else {
+            request.getRequestDispatcher("adminOrders.jsp").forward(request, response);
+        }
     }
 }

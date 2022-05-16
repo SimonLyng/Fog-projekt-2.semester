@@ -39,7 +39,6 @@
                                 <input type="hidden" name="status" value="${order.getOrderStatus()}" />
                                 <input type="submit" id="updatestatusorder" name="OrderID" value="${Integer.parseInt(order.getIdOrder())}"/>
                             </form></td>
-
                         </tr>
                     </c:if>
                 </c:forEach>
