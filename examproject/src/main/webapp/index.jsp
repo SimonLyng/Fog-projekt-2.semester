@@ -97,7 +97,7 @@
                         <div class="mb-3">
                             <label for="shedW" class="form-label">Redskabsrum bredde</label>
                             <select id="shedW" name="shedW" class="form-select">
-                                <option value="" selected>Ønsker ikke redskabsrum</option>
+                                <option value="0" selected>Ønsker ikke redskabsrum</option>
                                 <option value="210">210 cm</option>
                                 <option value="240">240 cm</option>
                                 <option value="270">270 cm</option>
@@ -121,7 +121,7 @@
                         <div class="mb-3">
                             <label for="shedL" class="form-label">Redskabsrum længde</label>
                             <select id="shedL" name="shedL" class="form-select">
-                                <option value="" selected>Ønsker ikke redskabsrum</option>
+                                <option value="0" selected>Ønsker ikke redskabsrum</option>
                                 <option value="150">150 cm</option>
                                 <option value="180">180 cm</option>
                                 <option value="210">210 cm</option>
@@ -260,7 +260,7 @@
                         <div class="mb-3">
                             <label for="shedW2" class="form-label">Redskabsrum bredde</label>
                             <select id="shedW2" name="shedW2" class="form-select">
-                                <option value="" selected>Ønsker ikke redskabsrum</option>
+                                <option value="0" selected>Ønsker ikke redskabsrum</option>
                                 <option value="210">210 cm</option>
                                 <option value="240">240 cm</option>
                                 <option value="270">270 cm</option>
@@ -284,7 +284,7 @@
                         <div class="mb-3">
                             <label for="shedL2" class="form-label">Redskabsrum længde</label>
                             <select id="shedL2" name="shedL2" class="form-select">
-                                <option value="" selected>Ønsker ikke redskabsrum</option>
+                                <option value="0" selected>Ønsker ikke redskabsrum</option>
                                 <option value="150">150 cm</option>
                                 <option value="180">180 cm</option>
                                 <option value="210">210 cm</option>
