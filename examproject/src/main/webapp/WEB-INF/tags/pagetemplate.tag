@@ -77,18 +77,16 @@
         <div class="row mt-4">
             <div class="col border-end border-3">
                 <p class="fw-bold">Adresse</p>
-                Cupcakevej 66<br/>
-                Bornholm
+                Firskovvej 20, 2800 Lyngby
             </div>
             <div class="col border-end border-3">
                 <p class="fw-bold">Om os</p>
-                Vi er et lille bageri,<br/>
-                der bare elsker at lave cupcakes
+                Vi er store!
             </div>
             <div class="col">
                 <p class="fw-bold">Kontakt</p>
-                <i class="fa fa-mobile" aria-hidden="true"></i> +45 67 43 28 73<br/>
-                <i class="fa fa-envelope-o"></i> OlskerCupcakes@gmail.com
+                <i class="fa fa-mobile" aria-hidden="true"></i> +45 45 87 10 01<br/>
+                <i class="fa fa-envelope-o"></i> info@johannesfog.dk
             </div>
         </div>
 

@@ -84,7 +84,6 @@
                             <label for="roof" class="form-label">Tag</label>
                             <select id="roof" name="roof" class="form-select">
                                 <option value="1">Plasttrapezplader</option>
-                                <option value="2" selected>Plasttrapezplader</option>
                             </select>
                         </div>
                         <br>
@@ -247,7 +246,6 @@
                             <label for="roof2" class="form-label">Tag</label>
                             <select id="roof2" name="roof2" class="form-select">
                                 <option value="1">Plasttrapezplader</option>
-                                <option value="2" selected>Plasttrapezplader</option>
                             </select>
                         </div>
                         <br>

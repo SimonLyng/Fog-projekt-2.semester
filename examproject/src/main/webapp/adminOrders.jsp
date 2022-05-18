@@ -18,6 +18,7 @@
         </c:if>
         <c:if test="${sessionScope.orders != null}">
             <c:forEach items="${['Started', 'Påbegyndt', 'Færdigt']}" var="status">
+                <h3>Tabel for ${status}</h3>
                 <table class="table table-dark table-striped">
                     <thead>
                         <tr>
@@ -29,6 +30,16 @@
                             <th scope="col">Skur bredde</th>
                             <th scope="col">Skur længde</th>
                             <th scope="col">Carport tag</th>
+                            <th></th>
+                            <c:if test="${status.equals('Started')}">
+                                <th scope="col">Rediger ordre</th>
+                                <th scope="col">Fjern ordre</th>
+                                <th scope="col">Updater status</th>
+                            </c:if>
+                            <c:if test="${status.equals('Påbegyndt')}">
+                                <th scope="col">Updater status</th>
+                            </c:if>
+                            <th scope="col">Se stykliste</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,10 +78,28 @@
                                             </form>
                                         </td>
                                     </c:if>
+                                    <c:if test="${order.orderStatus.equals('Påbegyndt')}">
+                                        <td>
+                                            <form method="post" action="updatestatusorder">
+                                                <input type="hidden" name="status" value="${order.orderStatus}"/>
+                                                <button class="btn btn-secondary" type="submit" id="updatestatusorder" name="OrderID" value="${order.idOrder}">
+                                                    Send videre
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </c:if>
+                                    <td>
+                                        <form method="post" action="styklist">
+                                            <input type="hidden" name="status" value="${order.orderStatus}"/>
+                                            <button class="btn btn-secondary" type="submit" id="stykliste" name="orderid" value="${order.idOrder}">
+                                                Stykliste
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 <form action="/editorder">
                                     <tr id="rowOrderEdit${order.idOrder}" hidden>
-                                        <td colspan="11" style="padding: 0;">
+                                        <td colspan="13" style="padding: 0;">
                                             <table class="table table-dark" style="border-width: 0">
                                                 <thead>
                                                     <tr>
@@ -121,6 +150,56 @@
                                                                 </style>
                                                                 <text x="300" y="300">Please ensure that javascript is enabled in your browser</text>
                                                             </svg>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <c:if test="${sessionScope.rt != null}">
+                                                                <table class="table table-dark table-striped">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Type</th>
+                                                                        <th scope="col">Beskrivelse</th>
+                                                                        <th scope="col">Længde</th>
+                                                                        <th scope="col">Antal</th>
+                                                                        <th scope="col">Fremgangsmåde</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <c:forEach items="${sessionScope.rt}" var="styk">
+                                                                        <tr>
+                                                                            <td>${styk.getType()}</td>
+                                                                            <td>${styk.getDescription()}</td>
+                                                                            <td>${Integer.parseInt(styk.getLength())}</td>
+                                                                            <td>${Integer.parseInt(styk.getAmount())}</td>
+                                                                            <td>${styk.getDesc()}</td>
+                                                                        </tr>
+                                                                    </c:forEach>
+                                                                    </tbody>
+                                                                </table>
+                                                            </c:if>
+                                                            <c:if test="${sessionScope.sf != null}">
+                                                                <table class="table table-dark table-striped">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Type</th>
+                                                                        <th scope="col">Beskrivelse</th>
+                                                                        <th scope="col">Antal</th>
+                                                                        <th scope="col">Enhed</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <c:forEach items="${sessionScope.sf}" var="styk">
+                                                                        <tr>
+                                                                            <td>${styk.getType()}</td>
+                                                                            <td>${styk.getDescription()}</td>
+                                                                            <td>${Integer.parseInt(styk.getAmount())}</td>
+                                                                            <td>${styk.getUnit()}</td>
+                                                                        </tr>
+                                                                    </c:forEach>
+                                                                    </tbody>
+                                                                </table>
+                                                            </c:if>
                                                         </td>
                                                     </tr>
                                                 </tbody>

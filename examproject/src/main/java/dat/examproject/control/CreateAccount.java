@@ -103,15 +103,16 @@ public class CreateAccount extends HttpServlet {
                 session.setAttribute("user", user); // adding user object to session scope
                 //addOrder.doPost(request, response);
                 if (request.getParameter("pageHidden").equals("index")) {
-                    System.out.println("Også her");
                     Order order = orderMapper.createOrder(user.getIdUser(), carportBred, carportLængde, tag, skurBred, skurLængde);
                     order.setDate(orderMapper.orderDate(order.getIdOrder()));
                     orders.add(order);
                     session.setAttribute("orders", orders);
                     stykListMapper.createStykList(user.getIdUser(), carportLængde, carportBred, skurLængde, skurBred);
                     StykList stykList = stykListMapper.readStykList(user.getIdUser());
+                    int price = stykListMapper.calcPrice(stykList.getRtList(), stykList.getSfList());
                     session.setAttribute("rt", stykList.getRtList());
                     session.setAttribute("sf", stykList.getSfList());
+                    session.setAttribute("price", price);
                     request.getRequestDispatcher("orders.jsp").forward(request, response);
                 } else {
                     request.getRequestDispatcher("index.jsp").forward(request, response);
