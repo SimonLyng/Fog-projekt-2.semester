@@ -7,16 +7,18 @@ public class RT {
     private int length;
     private int amount;
     private String desc;
+    private int price;
     // Include price
 
 
-    public RT(int rtid, String type, String description, int length, int amount, String desc) {
+    public RT(int rtid, String type, String description, int length, int amount, String desc, int price) {
         this.rtid = rtid;
         this.type = type;
         this.description = description;
         this.length = length;
         this.amount = amount;
         this.desc = desc;
+        this.price = price;
     }
 
     public int getRtid() {
@@ -65,6 +67,14 @@ public class RT {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public int getPrice() {
+        return price*amount;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     //

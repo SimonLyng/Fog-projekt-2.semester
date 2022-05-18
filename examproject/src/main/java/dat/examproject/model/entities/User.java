@@ -8,11 +8,11 @@ public class User
     private String mail;
     private String password;
     private String name;
-    private int phone;
+    private String phone;
     private int idCard;
     private String role;
 
-    public User(int idUser, String mail, String password, String name, int phone, int idCard, String role) {
+    public User(int idUser, String mail, String password, String name, String phone, int idCard, String role) {
         this.idUser = idUser;
         this.mail = mail;
         this.password = password;
@@ -22,7 +22,7 @@ public class User
         this.role = role;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -93,7 +93,7 @@ public class User
         User user = (User) o;
         return getMail().equals(user.getMail()) && getPassword().equals(user.getPassword()) &&
                 getIdUser() == user.getIdUser() && getName().equals(user.getName()) &&
-                getPhone() == user.getPhone() && getIdCard() == user.getIdCard() &&
+                getPhone().equals(user.getPhone()) && getIdCard() == user.getIdCard() &&
                 getRole().equals(user.getRole());
     }
 

@@ -39,8 +39,7 @@ public class CreateAccount extends HttpServlet {
         response.sendRedirect("index.jsp");
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
-    {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html");
         HttpSession session = request.getSession();
         session.setAttribute("user", null); // adding empty user object to session scope
@@ -50,8 +49,7 @@ public class CreateAccount extends HttpServlet {
         // Gets orders
         if (session.getAttribute("orders") != null) {
             orders = (ArrayList<Order>) session.getAttribute("orders");
-        }
-        else {
+        } else {
             session.setAttribute("orders", null);
         }
 
@@ -66,7 +64,7 @@ public class CreateAccount extends HttpServlet {
 /*        String button = request.getParameter("createButton");
         System.out.println(button);*/
         //Sikre sig om hvorvidt request kommer fra index.jsp eller createAccount.jsp
-        if(request.getParameter("pageHidden").equals("index")) {
+        if (request.getParameter("pageHidden").equals("index")) {
             System.out.println("Inde her");
             carportBred = Integer.parseInt(request.getParameter("carW"));
             carportLængde = Integer.parseInt(request.getParameter("carL"));
@@ -78,41 +76,54 @@ public class CreateAccount extends HttpServlet {
         String email = request.getParameter("createEmail");
         String password = request.getParameter("createPassword");
         String name = request.getParameter("createName");
-        int phone = Integer.parseInt(request.getParameter("createPhone"));
-        int cardNr = Integer.parseInt(request.getParameter("createCardNr"));
-        int expMonth = Integer.parseInt(request.getParameter("createExpMonth"));
-        int expYear = Integer.parseInt(request.getParameter("createExpYear"));
-        int cvc = Integer.parseInt(request.getParameter("createCvc"));
+        String phone = request.getParameter("createPhone");
+        String cardNr = request.getParameter("createCardNr");
+        int expMonth;
+        int expYear;
+        int cvc;
+//        try {
+//            expMonth = Integer.parseInt(request.getParameter("createExpMonth"));
+//            expYear = Integer.parseInt(request.getParameter("createExpYear"));
+//            cvc = Integer.parseInt(request.getParameter("createCvc"));
+//        } catch (NumberFormatException ex) {
+//            request.setAttribute("errormessage", ex.getMessage());
+//            request.getRequestDispatcher("error.jsp").forward(request, response);
+//        }
 
-        try
-        {
-            // Comment: Lav således at, hvis en bruger skriver samme e-mail og adgangskode, kaldes login istedet
-            // og hvis en e-mail angives, som allerede eksisterer, skal den lave en exception
-            userMapper.createUser(email, password, name, phone, "user", cardNr, expMonth, expYear, cvc);
-            User user = userMapper.login(email, password);
-            session = request.getSession();
-            session.setAttribute("user", user); // adding user object to session scope
-            //addOrder.doPost(request, response);
-            if(request.getParameter("pageHidden").equals("index")) {
-                System.out.println("Også her");
-                Order order = orderMapper.createOrder(user.getIdUser(), carportBred, carportLængde, tag, skurBred, skurLængde);
-                order.setDate(orderMapper.orderDate(order.getIdOrder()));
-                orders.add(order);
-                session.setAttribute("orders", orders);
-                stykListMapper.createStykList(user.getIdUser(), carportLængde, carportBred, skurLængde, skurBred);
-                StykList stykList = stykListMapper.readStykList(user.getIdUser());
-                session.setAttribute("rt", stykList.getRtList());
-                session.setAttribute("sf", stykList.getSfList());
-                request.getRequestDispatcher("orders.jsp").forward(request, response);
-            }
-            else {
-                request.getRequestDispatcher("index.jsp").forward(request, response);
+        try {
+            expMonth = Integer.parseInt(request.getParameter("createExpMonth"));
+            expYear = Integer.parseInt(request.getParameter("createExpYear"));
+            cvc = Integer.parseInt(request.getParameter("createCvc"));
+            try {
+                // Comment: Lav således at, hvis en bruger skriver samme e-mail og adgangskode, kaldes login istedet
+                // og hvis en e-mail angives, som allerede eksisterer, skal den lave en exception
+                userMapper.createUser(email, password, name, phone, "user", cardNr, expMonth, expYear, cvc);
+                User user = userMapper.login(email, password);
+                session = request.getSession();
+                session.setAttribute("user", user); // adding user object to session scope
+                //addOrder.doPost(request, response);
+                if (request.getParameter("pageHidden").equals("index")) {
+                    System.out.println("Også her");
+                    Order order = orderMapper.createOrder(user.getIdUser(), carportBred, carportLængde, tag, skurBred, skurLængde);
+                    order.setDate(orderMapper.orderDate(order.getIdOrder()));
+                    orders.add(order);
+                    session.setAttribute("orders", orders);
+                    stykListMapper.createStykList(user.getIdUser(), carportLængde, carportBred, skurLængde, skurBred);
+                    StykList stykList = stykListMapper.readStykList(user.getIdUser());
+                    session.setAttribute("rt", stykList.getRtList());
+                    session.setAttribute("sf", stykList.getSfList());
+                    request.getRequestDispatcher("orders.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                }
+            } catch (DatabaseException e) {
+                Logger.getLogger("web").log(Level.SEVERE, e.getMessage());
+                request.setAttribute("errormessage", e.getMessage());
+                request.getRequestDispatcher("error.jsp").forward(request, response);
             }
         }
-        catch (DatabaseException e)
-        {
-            Logger.getLogger("web").log(Level.SEVERE, e.getMessage());
-            request.setAttribute("errormessage", e.getMessage());
+        catch (NumberFormatException ex) {
+            request.setAttribute("errormessage", ex.getMessage());
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }

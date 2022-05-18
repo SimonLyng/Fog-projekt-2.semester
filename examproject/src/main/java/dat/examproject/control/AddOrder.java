@@ -65,13 +65,15 @@ public class AddOrder extends HttpServlet
         User user = (User) session.getAttribute("user");
         try {
             Order order = orderMapper.createOrder(user.getIdUser(), carportBred, carportLængde, tag, skurBred, skurLængde);
-            order.setDate(orderMapper.orderDate(order.getIdOrder()));
+            //order.setDate(orderMapper.orderDate(order.getIdOrder()));
             orders.add(order);
             session.setAttribute("orders", orders);
-            stykListMapper.createStykList(user.getIdUser(), carportLængde, carportBred, skurLængde, skurBred);
-            StykList stykList = stykListMapper.readStykList(user.getIdUser());
+            stykListMapper.createStykList(order.getIdOrder(), carportLængde, carportBred, skurLængde, skurBred);
+            StykList stykList = stykListMapper.readStykList(order.getIdOrder());
+            int price = stykListMapper.calcPrice(stykList.getRtList(), stykList.getSfList());
             session.setAttribute("rt", stykList.getRtList());
             session.setAttribute("sf", stykList.getSfList());
+            session.setAttribute("price", price);
         }
         catch (DatabaseException e)
         {
@@ -79,7 +81,7 @@ public class AddOrder extends HttpServlet
             request.setAttribute("errormessage", e.getMessage());
             request.getRequestDispatcher("error.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("orders.jsp").forward(request, response);
+        request.getRequestDispatcher("orderAccept.jsp").forward(request, response);
     }
 
     public void destroy()

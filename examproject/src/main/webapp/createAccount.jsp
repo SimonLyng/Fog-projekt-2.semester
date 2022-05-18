@@ -32,29 +32,29 @@
             <div class="row mb-3">
                 <label for="createPhone" class="col-sm-2 col-form-label">Telefon nr: </label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" id="createPhone" name="createPhone"/>
+                    <input type="text" class="form-control" id="createPhone" name="createPhone" maxlength="8" minlength="8"/>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="createCardNr" class="col-sm-2 col-form-label">Kort nr: </label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" id="createCardNr" name="createCardNr"/>
+                    <input type="text" class="form-control" id="createCardNr" name="createCardNr" maxlength="16" minlength="16"/>
                 </div>
             </div>
             <div class="row mb-5">
                 <label for="createExpMonth" class="col-sm-2 col-form-label">Kort udløbsdato: </label>
                 <div class="col-sm-1">
-                    <input type="number" class="form-control" id="createExpMonth" name="createExpMonth"/>
+                    <input type="text" class="form-control" id="createExpMonth" name="createExpMonth" maxlength="2" minlength="2"/>
                 </div>
                 <div class="col-sm-1">
                     <a>/</a>
                 </div>
                 <div class="col-sm-1">
-                    <input type="number" class="form-control" id="createExpYear" name="createExpYear"/>
+                    <input type="text" class="form-control" id="createExpYear" name="createExpYear" maxlength="2" minlength="2"/>
                 </div>
                 <label for="createCvc" class="col-sm-1 col-form-label">cvc: </label>
                 <div class="col-sm-1">
-                    <input type="number" class="form-control" id="createCvc" name="createCvc"/>
+                    <input type="text" class="form-control" id="createCvc" name="createCvc" maxlength="3" minlength="3"/>
                 </div>
             </div>
             <input type="hidden" name="pageHidden" value="createHidden" />

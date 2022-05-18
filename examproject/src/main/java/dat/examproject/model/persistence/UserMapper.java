@@ -38,7 +38,7 @@ public class UserMapper implements IUserMapper
                 {
                     int idUser = rs.getInt("iduser");
                     String name = rs.getString("name");
-                    int phone = rs.getInt("phone");
+                    String phone = rs.getString("phone");
                     int idCard = rs.getInt("idcard");
                     String role = rs.getString("role");
                     user = new User(idUser, mail, password, name, phone, idCard, role);
@@ -77,7 +77,7 @@ public class UserMapper implements IUserMapper
                     String mail = rs.getString("mail");
                     String password = rs.getString("password");
                     String name = rs.getString("name");
-                    int phone = rs.getInt("phone");
+                    String phone = rs.getString("phone");
                     int idCard = rs.getInt("idcard");
                     user = new User(idUser, mail, password, name, phone, idCard, role);
                     customers.add(user);
@@ -91,14 +91,14 @@ public class UserMapper implements IUserMapper
 
     }
 
-    private void createCard(int idCard, int cardNr, int expMonth, int expYear, int cvc) throws DatabaseException {
+    private void createCard(int idCard, String cardNr, int expMonth, int expYear, int cvc) throws DatabaseException {
 
         String sql = "insert into paycard (idcard, cardnr, expmonth, expyear, cvc) values (?,?,?,?,?)";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setInt(1, idCard);
-                ps.setInt(2, cardNr);
+                ps.setString(2, cardNr);
                 ps.setInt(3, expMonth);
                 ps.setInt(4, expYear);
                 ps.setInt(5, cvc);
@@ -114,8 +114,8 @@ public class UserMapper implements IUserMapper
     }
 
     @Override
-    public void createUser(String mail, String password, String name, int phone, String role,
-                           int cardNr, int expMonth, int expYear, int cvc) throws DatabaseException
+    public void createUser(String mail, String password, String name, String phone, String role,
+                           String cardNr, int expMonth, int expYear, int cvc) throws DatabaseException
     {
         String sql = "SELECT * FROM user WHERE mail = ?";
 
@@ -146,7 +146,7 @@ public class UserMapper implements IUserMapper
                 ps.setString(2, mail);
                 ps.setString(3, password);
                 ps.setString(4, name);
-                ps.setInt(5, phone);
+                ps.setString(5, phone);
                 ps.setInt(6, id);
                 ps.setString(7, role);
                 int rowsAffected = ps.executeUpdate();

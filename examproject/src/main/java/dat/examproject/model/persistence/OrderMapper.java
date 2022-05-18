@@ -122,43 +122,6 @@ public class OrderMapper {
         return order;
     }
 
-//    public StykList createStykList(int idcustomer, ArrayList<Integer> idamount, ArrayList<Integer> idTree, ArrayList<Integer> idRoof,
-//                             ArrayList<Integer> idScrew, ArrayList<Integer> idFitting) throws DatabaseException
-//    {
-//        StykList stykList;
-//        String status = "Started";
-//
-//        String sql = "insert into piecelist (idcustomer, idamount, idtree, idroof, idscrew, idfitting) values (?,?,?,?,?,?)";;
-//        try (Connection connection = connectionPool.getConnection())
-//        {
-//            try (Statement stmt = connection.createStatement()){
-//                String sql2 = "alter table piecelist AUTO_INCREMENT = 1";
-//                stmt.execute(sql2);
-//            }
-//            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
-//            {
-//                // Comment: Change so it reads from database, when db has been created
-//                ps.setInt(1, idcustomer);
-//                // Comment: Has to be changed, either by storing lists or making more tables
-//                ps.setInt(2, idamount.get(0));
-//                ps.setInt(3, idTree.get(0));
-//                ps.setInt(4, idRoof.get(0));
-//                ps.setInt(5, idScrew.get(0));
-//                ps.setInt(4, idFitting.get(0));
-//                int rowsAffected = ps.executeUpdate();
-//                ResultSet rs = ps.getGeneratedKeys();
-//                rs.next();
-//                int idorder = rs.getInt(1);
-//                stykList = new StykList(idorder, idcustomer, idamount, idTree, idRoof, idScrew, idFitting, status);
-//            }
-//        }
-//        catch (SQLException ex)
-//        {
-//            throw new DatabaseException(ex, "Could not insert order into database");
-//        }
-//        return stykList;
-//    }
-
     public void updateOrders(int idCustommer, int idOrder) {
         String sql = "UPDATE orders SET idcustomer = ? WHERE idorder = ?";
         try (Connection connection = connectionPool.getConnection()) {

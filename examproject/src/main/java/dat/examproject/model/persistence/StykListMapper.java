@@ -26,9 +26,10 @@ public class StykListMapper {
         int length;
         int amount;
         String desc;
+        int price;
 
         String sql = "SELECT rtpiecelist.rtid AS id, rtpiecelist.amount AS amount, rtpiecelist.description AS text, rt.type AS type, rt.description AS " +
-                "description, rt.length AS length FROM rtpiecelist INNER JOIN rt ON rtpiecelist.rtid = rt.idrt AND " +
+                "description, rt.length AS length, rt.price AS price FROM rtpiecelist INNER JOIN rt ON rtpiecelist.rtid = rt.idrt AND " +
                 "rtpiecelist.orderid = ?";
 
         try (Connection connection = connectionPool.getConnection()) {
@@ -42,8 +43,9 @@ public class StykListMapper {
                     length = rs.getInt("length");
                     amount = rs.getInt("amount");
                     desc = rs.getString("text");
+                    price = rs.getInt("price");
 
-                    rt = new RT(rtid, type, description, length, amount, desc);
+                    rt = new RT(rtid, type, description, length, amount, desc, price);
                     roofTree.add(rt);
                 }
             }
@@ -62,9 +64,10 @@ public class StykListMapper {
         String description;
         String unit;
         int amount;
+        int price;
 
         String sql = "SELECT sfpiecelist.sfid AS id, sfpiecelist.amount AS amount, sf.type AS type, sf.description AS " +
-                "description, sf.unit AS unit FROM sfpiecelist INNER JOIN sf ON sfpiecelist.sfid = sf.idsf AND " +
+                "description, sf.unit AS unit, sf.price as price FROM sfpiecelist INNER JOIN sf ON sfpiecelist.sfid = sf.idsf AND " +
                 "sfpiecelist.orderid = ?";
 
         try (Connection connection = connectionPool.getConnection()) {
@@ -77,8 +80,9 @@ public class StykListMapper {
                     description = rs.getString("description");
                     unit = rs.getString("unit");
                     amount = rs.getInt("amount");
+                    price = rs.getInt("price");
 
-                    sf = new SF(sfid, type, description, unit, amount);
+                    sf = new SF(sfid, type, description, unit, amount, price);
                     screwFitting.add(sf);
                 }
             }
@@ -129,6 +133,19 @@ public class StykListMapper {
         {
             throw new DatabaseException(ex, "Could not insert material into database");
         }
+    }
+
+    public int calcPrice(ArrayList<RT> rts, ArrayList<SF> sfs){
+        int price = 0;
+        for(RT rt : rts){
+            price += rt.getPrice();
+        }
+
+        for(SF sf : sfs){
+            price += sf.getPrice();
+        }
+
+        return price;
     }
 
     public void createStykList(int idOrder, int carLength, int carWidth, int shedLength, int shedWidth) throws DatabaseException {

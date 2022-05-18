@@ -47,8 +47,13 @@ public class RemoveOrder extends HttpServlet {
         } else {
             session.setAttribute("orders", null);
         }
-        int idOrder = Integer.parseInt(request.getParameter("OrderID"));
-
+        int idOrder = 0;
+        if(request.getParameter("pageHidden").equals("accept")) {
+            idOrder = orders.get(orders.size()-1).getIdOrder();
+        }
+        else {
+            idOrder = Integer.parseInt(request.getParameter("OrderID"));
+        }
         try {
             orders = orderMapper.removeOrder(idOrder, orders);
             session = request.getSession();
@@ -61,6 +66,9 @@ public class RemoveOrder extends HttpServlet {
         }
         if(request.getParameter("pageHidden").equals("orders")) {
             request.getRequestDispatcher("orders.jsp").forward(request, response);
+        }
+        else if(request.getParameter("pageHidden").equals("accept")) {
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
         else {
             request.getRequestDispatcher("adminOrders.jsp").forward(request, response);

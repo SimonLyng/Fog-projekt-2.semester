@@ -6,15 +6,17 @@ public class SF {
     private String description;
     private String unit;
     private int amount;
+    private int price;
     // Include price
 
 
-    public SF(int sfid, String type, String description, String unit, int amount) {
+    public SF(int sfid, String type, String description, String unit, int amount, int price) {
         this.sfid = sfid;
         this.type = type;
         this.description = description;
         this.unit = unit;
         this.amount = amount;
+        this.price = price;
     }
 
     public int getSfid() {
@@ -57,7 +59,15 @@ public class SF {
         this.amount = amount;
     }
 
-//    @Override
+    public int getPrice() {
+        return price*amount;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    //    @Override
 //    public boolean equals(Object o)
 //    {
 //        if (this == o) return true;
