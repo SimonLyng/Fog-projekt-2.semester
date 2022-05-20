@@ -1,0 +1,39 @@
+@startuml
+state index.jsp
+state login.jsp
+title Navigationsdiagram Fog Carport
+
+note top of login.jsp
+Username and role
+stored in session
+end note
+note top of index.jsp
+Byg selv Carport
+end note
+
+index.jsp --> login.jsp: log på
+login.jsp --> LoggedOn: log på  [ok]
+login.jsp --> login.jsp: log på [fejl]
+createAccount.jsp --> index.jsp
+LoggedOn --> LoggedOnAdmin
+LoggedOn --> LoggedOnUser
+
+index.jsp --> createAccount.jsp: opret bruger
+state LoggedOnAdmin {
+    state adminOrders.jsp
+    state userOrder.jsp
+    state orderAccept.jsp
+    state piecelist.jsp
+    adminOrders.jsp --> userOrder.jsp: ret
+    adminOrders.jsp --> userOrder.jsp: fjern
+    userOrder.jsp --> orderAccept.jsp
+    orderAccept.jsp --> piecelist.jsp: beregn
+    LoggedOn --> index.jsp: retur
+}
+state LoggedOnUser {
+    state "userOrder" as userOrder1.jsp
+    state "piecelist" as piecelist1.jsp
+    userOrder1.jsp --> piecelist1.jsp:Efter betaling
+
+}
+@enduml
