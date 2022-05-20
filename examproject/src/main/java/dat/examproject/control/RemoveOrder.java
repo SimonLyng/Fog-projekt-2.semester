@@ -71,6 +71,8 @@ public class RemoveOrder extends HttpServlet {
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
         else {
+            ArrayList<ArrayList<Order>> compiledOrders = orderMapper.ordersByStatus(orders);
+            session.setAttribute("compiledOrders", compiledOrders);
             request.getRequestDispatcher("adminOrders.jsp").forward(request, response);
         }
     }

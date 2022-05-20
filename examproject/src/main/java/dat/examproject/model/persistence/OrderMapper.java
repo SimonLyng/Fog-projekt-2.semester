@@ -225,4 +225,23 @@ public class OrderMapper {
         return date;
     }
 
+    public ArrayList<ArrayList<Order>> ordersByStatus(ArrayList<Order> orders){
+        ArrayList<ArrayList<Order>> compiledOrders = new ArrayList<>();
+        compiledOrders.add(new ArrayList<>());
+        compiledOrders.add(new ArrayList<>());
+        compiledOrders.add(new ArrayList<>());
+        for(Order o : orders){
+            if(o.getOrderStatus().equals("Started")){
+                compiledOrders.get(0).add(o);
+            }
+            else if(o.getOrderStatus().equals("Påbegyndt")){
+                compiledOrders.get(1).add(o);
+            }
+            else{
+                compiledOrders.get(2).add(o);
+            }
+        }
+        return compiledOrders;
+    }
+
 }

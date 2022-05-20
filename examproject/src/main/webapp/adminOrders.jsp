@@ -17,8 +17,9 @@
             <p>Der er ingen forespørgsler i systemet</p>
         </c:if>
         <c:if test="${sessionScope.orders != null}">
-            <c:forEach items="${['Started', 'Påbegyndt', 'Færdigt']}" var="status">
-                <h3>Tabel for ${status}</h3>
+            <c:forEach items="${sessionScope.compiledOrders}" var="list">
+                <c:if test="${list.isEmpty() != true}">
+                <h3>Tabel for ${list.get(0).getOrderStatus()}</h3>
                 <table class="table table-dark table-striped">
                     <thead>
                         <tr>
@@ -31,186 +32,185 @@
                             <th scope="col">Skur længde</th>
                             <th scope="col">Carport tag</th>
                             <th></th>
-                            <c:if test="${status.equals('Started')}">
+                            <c:if test="${list.get(0).getOrderStatus().equals('Started')}">
                                 <th scope="col">Rediger ordre</th>
                                 <th scope="col">Fjern ordre</th>
                                 <th scope="col">Updater status</th>
                             </c:if>
-                            <c:if test="${status.equals('Påbegyndt')}">
+                            <c:if test="${list.get(0).getOrderStatus().equals('Påbegyndt')}">
                                 <th scope="col">Updater status</th>
                             </c:if>
                             <th scope="col">Se stykliste</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${sessionScope.orders}" var="order">
-                            <c:if test="${order.orderStatus.equals(status)}">
-                                <tr id="rowOrder${order.idOrder}">
-                                    <td>${order.idCustomer}</td>
-                                    <td>${order.idOrder}</td>
-                                    <td>${order.orderStatus}</td>
-                                    <td id="carWVal${order.idOrder}">${order.carportBred}</td>
-                                    <td id="carLVal${order.idOrder}">${order.carportLængde}</td>
-                                    <td id="shedWVal${order.idOrder}">${order.skurBred}</td>
-                                    <td id="shedLVal${order.idOrder}">${order.skurLængde}</td>
-                                    <td>${order.tag}</td>
-                                    <td>${order.date}</td>
-                                    <c:if test="${order.orderStatus.equals('Started')}">
-                                        <td>
-                                            <button class="btn btn-primary" onclick="editOrder(${order.idOrder}, this)">
-                                                Rediger
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <form method="post" action="removeorder">
-                                                <input type="hidden" name="pageHidden" value=""/>
-                                                <button class="btn btn-secondary" type="submit" id="Fjern" name="OrderID" value="${order.idOrder}">
-                                                    Fjern
-                                                </button>
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <form method="post" action="updatestatusorder">
-                                                <input type="hidden" name="status" value="${order.orderStatus}"/>
-                                                <button class="btn btn-secondary" type="submit" id="updatestatusorder" name="OrderID" value="${order.idOrder}">
-                                                    Send videre
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </c:if>
-                                    <c:if test="${order.orderStatus.equals('Påbegyndt')}">
-                                        <td>
-                                            <form method="post" action="updatestatusorder">
-                                                <input type="hidden" name="status" value="${order.orderStatus}"/>
-                                                <button class="btn btn-secondary" type="submit" id="updatestatusorder" name="OrderID" value="${order.idOrder}">
-                                                    Send videre
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </c:if>
+                        <c:forEach items="${list}" var="order">
+                            <tr id="rowOrder${order.idOrder}">
+                                <td>${order.idCustomer}</td>
+                                <td>${order.idOrder}</td>
+                                <td>${order.orderStatus}</td>
+                                <td id="carWVal${order.idOrder}">${order.carportBred}</td>
+                                <td id="carLVal${order.idOrder}">${order.carportLængde}</td>
+                                <td id="shedWVal${order.idOrder}">${order.skurBred}</td>
+                                <td id="shedLVal${order.idOrder}">${order.skurLængde}</td>
+                                <td>${order.tag}</td>
+                                <td>${order.date}</td>
+                                <c:if test="${order.orderStatus.equals('Started')}">
                                     <td>
-                                        <form method="post" action="styklist">
-                                            <input type="hidden" name="status" value="${order.orderStatus}"/>
-                                            <button class="btn btn-secondary" type="submit" id="stykliste" name="orderid" value="${order.idOrder}">
-                                                Stykliste
+                                        <button class="btn btn-primary" onclick="editOrder(${order.idOrder}, this)">
+                                            Rediger
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <form method="post" action="removeorder">
+                                            <input type="hidden" name="pageHidden" value=""/>
+                                            <button class="btn btn-secondary" type="submit" id="Fjern" name="OrderID" value="${order.idOrder}">
+                                                Fjern
                                             </button>
                                         </form>
                                     </td>
+                                    <td>
+                                        <form method="post" action="updatestatusorder">
+                                            <input type="hidden" name="status" value="${order.orderStatus}"/>
+                                            <button class="btn btn-secondary" type="submit" id="updatestatusorder" name="OrderID" value="${order.idOrder}">
+                                                Send videre
+                                            </button>
+                                        </form>
+                                    </td>
+                                </c:if>
+                                <c:if test="${order.orderStatus.equals('Påbegyndt')}">
+                                    <td>
+                                        <form method="post" action="updatestatusorder">
+                                            <input type="hidden" name="status" value="${order.orderStatus}"/>
+                                            <button class="btn btn-secondary" type="submit" id="updatestatusorder" name="OrderID" value="${order.idOrder}">
+                                                Send videre
+                                            </button>
+                                        </form>
+                                    </td>
+                                </c:if>
+                                <td>
+                                    <form method="post" action="styklist">
+                                        <input type="hidden" name="status" value="${order.orderStatus}"/>
+                                        <button class="btn btn-secondary" type="submit" id="stykliste" name="orderid" value="${order.idOrder}">
+                                            Stykliste
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <form action="/editorder">
+                                <tr id="rowOrderEdit${order.idOrder}" hidden>
+                                    <td colspan="13" style="padding: 0;">
+                                        <table class="table table-dark" style="border-width: 0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Carport bredde</th>
+                                                    <th scope="col">Carport længde</th>
+                                                    <th scope="col">Skur bredde</th>
+                                                    <th scope="col">Skur længde</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input class="form-range carW" id="carW" type="range" min="240" max="600" step="30" value="${order.carportBred}" oninput="updateSVGs(${order.idOrder})">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-range carL" id="carL" type="range" min="240" max="780" step="30" value="${order.carportLængde}" oninput="updateSVGs(${order.idOrder})">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-range shedW" id="shedW" type="range" min="210" max="720" step="30" value="${order.skurBred}" oninput="updateSVGs(${order.idOrder})">
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-range shedL" id="shedL" type="range" min="150" max="690" step="30" value="${order.skurLængde}" oninput="updateSVGs(${order.idOrder})">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <table class="table table-light">
+                                            <thead>
+                                                <tr>
+                                                    <th>Side illustration</th>
+                                                    <th>Top illustration</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <svg width="600" height="600" x="0" y="0" preserveAspectRatio="xMinYMin" id="sideSVG${order.idOrder}">
+                                                            <style>
+                                                                text { text-anchor: middle; dominant-baseline: middle; }
+                                                            </style>
+                                                            <text x="300" y="300">Please ensure that javascript is enabled in your browser</text>
+                                                        </svg>
+                                                    </td>
+                                                    <td>
+                                                        <svg width="600" height="600" x="0" y="0" preserveAspectRatio="xMinYMin" id="topSVG${order.idOrder}">
+                                                            <style>
+                                                                text { text-anchor: middle; dominant-baseline: middle; }
+                                                            </style>
+                                                            <text x="300" y="300">Please ensure that javascript is enabled in your browser</text>
+                                                        </svg>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <c:if test="${sessionScope.rt != null}">
+                                                            <table class="table table-dark table-striped">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th scope="col">Type</th>
+                                                                    <th scope="col">Beskrivelse</th>
+                                                                    <th scope="col">Længde</th>
+                                                                    <th scope="col">Antal</th>
+                                                                    <th scope="col">Fremgangsmåde</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <c:forEach items="${sessionScope.rt}" var="styk">
+                                                                    <tr>
+                                                                        <td>${styk.getType()}</td>
+                                                                        <td>${styk.getDescription()}</td>
+                                                                        <td>${Integer.parseInt(styk.getLength())}</td>
+                                                                        <td>${Integer.parseInt(styk.getAmount())}</td>
+                                                                        <td>${styk.getDesc()}</td>
+                                                                    </tr>
+                                                                </c:forEach>
+                                                                </tbody>
+                                                            </table>
+                                                        </c:if>
+                                                        <c:if test="${sessionScope.sf != null}">
+                                                            <table class="table table-dark table-striped">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th scope="col">Type</th>
+                                                                    <th scope="col">Beskrivelse</th>
+                                                                    <th scope="col">Antal</th>
+                                                                    <th scope="col">Enhed</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <c:forEach items="${sessionScope.sf}" var="styk">
+                                                                    <tr>
+                                                                        <td>${styk.getType()}</td>
+                                                                        <td>${styk.getDescription()}</td>
+                                                                        <td>${Integer.parseInt(styk.getAmount())}</td>
+                                                                        <td>${styk.getUnit()}</td>
+                                                                    </tr>
+                                                                </c:forEach>
+                                                                </tbody>
+                                                            </table>
+                                                        </c:if>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
                                 </tr>
-                                <form action="/editorder">
-                                    <tr id="rowOrderEdit${order.idOrder}" hidden>
-                                        <td colspan="13" style="padding: 0;">
-                                            <table class="table table-dark" style="border-width: 0">
-                                                <thead>
-                                                    <tr>
-                                                        <th scope="col">Carport bredde</th>
-                                                        <th scope="col">Carport længde</th>
-                                                        <th scope="col">Skur bredde</th>
-                                                        <th scope="col">Skur længde</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <input class="form-range carW" id="carW" type="range" min="240" max="600" step="30" value="${order.carportBred}" oninput="updateSVGs(${order.idOrder})">
-                                                        </td>
-                                                        <td>
-                                                            <input class="form-range carL" id="carL" type="range" min="240" max="780" step="30" value="${order.carportLængde}" oninput="updateSVGs(${order.idOrder})">
-                                                        </td>
-                                                        <td>
-                                                            <input class="form-range shedW" id="shedW" type="range" min="210" max="720" step="30" value="${order.skurBred}" oninput="updateSVGs(${order.idOrder})">
-                                                        </td>
-                                                        <td>
-                                                            <input class="form-range shedL" id="shedL" type="range" min="150" max="690" step="30" value="${order.skurLængde}" oninput="updateSVGs(${order.idOrder})">
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <table class="table table-light">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Side illustration</th>
-                                                        <th>Top illustration</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <svg width="600" height="600" x="0" y="0" preserveAspectRatio="xMinYMin" id="sideSVG${order.idOrder}">
-                                                                <style>
-                                                                    text { text-anchor: middle; dominant-baseline: middle; }
-                                                                </style>
-                                                                <text x="300" y="300">Please ensure that javascript is enabled in your browser</text>
-                                                            </svg>
-                                                        </td>
-                                                        <td>
-                                                            <svg width="600" height="600" x="0" y="0" preserveAspectRatio="xMinYMin" id="topSVG${order.idOrder}">
-                                                                <style>
-                                                                    text { text-anchor: middle; dominant-baseline: middle; }
-                                                                </style>
-                                                                <text x="300" y="300">Please ensure that javascript is enabled in your browser</text>
-                                                            </svg>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <c:if test="${sessionScope.rt != null}">
-                                                                <table class="table table-dark table-striped">
-                                                                    <thead>
-                                                                    <tr>
-                                                                        <th scope="col">Type</th>
-                                                                        <th scope="col">Beskrivelse</th>
-                                                                        <th scope="col">Længde</th>
-                                                                        <th scope="col">Antal</th>
-                                                                        <th scope="col">Fremgangsmåde</th>
-                                                                    </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    <c:forEach items="${sessionScope.rt}" var="styk">
-                                                                        <tr>
-                                                                            <td>${styk.getType()}</td>
-                                                                            <td>${styk.getDescription()}</td>
-                                                                            <td>${Integer.parseInt(styk.getLength())}</td>
-                                                                            <td>${Integer.parseInt(styk.getAmount())}</td>
-                                                                            <td>${styk.getDesc()}</td>
-                                                                        </tr>
-                                                                    </c:forEach>
-                                                                    </tbody>
-                                                                </table>
-                                                            </c:if>
-                                                            <c:if test="${sessionScope.sf != null}">
-                                                                <table class="table table-dark table-striped">
-                                                                    <thead>
-                                                                    <tr>
-                                                                        <th scope="col">Type</th>
-                                                                        <th scope="col">Beskrivelse</th>
-                                                                        <th scope="col">Antal</th>
-                                                                        <th scope="col">Enhed</th>
-                                                                    </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                    <c:forEach items="${sessionScope.sf}" var="styk">
-                                                                        <tr>
-                                                                            <td>${styk.getType()}</td>
-                                                                            <td>${styk.getDescription()}</td>
-                                                                            <td>${Integer.parseInt(styk.getAmount())}</td>
-                                                                            <td>${styk.getUnit()}</td>
-                                                                        </tr>
-                                                                    </c:forEach>
-                                                                    </tbody>
-                                                                </table>
-                                                            </c:if>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </form>
-                            </c:if>
+                            </form>
                         </c:forEach>
                     </tbody>
                 </table>
+                </c:if>
                 <br>
                 <br>
             </c:forEach>

@@ -54,6 +54,8 @@ public class UpdateStatusOrder extends HttpServlet {
             orders = orderMapper.updateStatusOrders(status, idOrder);
             session = request.getSession();
             session.setAttribute("orders", orders);
+            ArrayList<ArrayList<Order>> compiledOrders = orderMapper.ordersByStatus(orders);
+            session.setAttribute("compiledOrders", compiledOrders);
         } catch (DatabaseException e) {
             Logger.getLogger("web").log(Level.SEVERE, e.getMessage());
             request.setAttribute("errormessage", e.getMessage());

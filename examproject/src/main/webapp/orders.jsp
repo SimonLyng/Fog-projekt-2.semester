@@ -43,8 +43,12 @@
                         <c:if test="${order.getOrderStatus().equals('Started')}">
                             <button type="button" class="btn btn-primary" disabled>Stykliste</button>
                         </c:if>
-                        <c:if test="${order.getOrderStatus().equals('Påbegyndt')}">
-                            <a class="btn btn-primary" href="${pageContext.request.contextPath}/piecelist.jsp" role="button">Stykliste</a>
+                        <c:if test="${order.getOrderStatus().equals('Påbegyndt') || order.getOrderStatus().equals('Færdigt')}">
+                            <form method="post" action="styklist">
+                                <button class="btn btn-primary" type="submit" id="stykliste" name="orderid" value="${order.idOrder}">
+                                    Stykliste
+                                </button>
+                            </form>
                         </c:if>
                     </td>
                     <td>

@@ -85,7 +85,9 @@ public class Login extends HttpServlet
             }
             else if(user.getRole().equalsIgnoreCase("admin")){
                 ArrayList<Order> allOrders = orderMapper.getAllOrders();
+                ArrayList<ArrayList<Order>> compiledOrders = orderMapper.ordersByStatus(allOrders);
                 session.setAttribute("orders", allOrders);
+                session.setAttribute("compiledOrders", compiledOrders);
                 customers = userMapper.readCustomerList("user");
                 session.setAttribute("customers", customers);
             }
