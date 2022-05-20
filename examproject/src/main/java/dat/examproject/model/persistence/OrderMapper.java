@@ -44,8 +44,7 @@ public class OrderMapper {
                     orderStatus = rs.getString("status");
                     date = rs.getDate("date");
 
-                    order = new Order(idOrder, idCustomer, carW, carL, tag, shedW, shedL, orderStatus);
-                    order.setDate(date);
+                    order = new Order(idOrder, idCustomer, carW, carL, tag, shedW, shedL, orderStatus, date);
                     orders.add(order);
                 }
             }
@@ -68,6 +67,7 @@ public class OrderMapper {
         int shedW;
         int shedL;
         String orderStatus;
+        java.sql.Date date;
 
         String sql = "SELECT * FROM orders";
 
@@ -84,8 +84,9 @@ public class OrderMapper {
                     shedW = rs.getInt("shedw");
                     shedL = rs.getInt("shedl");
                     orderStatus = rs.getString("status");
+                    date = rs.getDate("date");
 
-                    order = new Order(idOrder, idCustomer, carW, carL, tag, shedW, shedL, orderStatus);
+                    order = new Order(idOrder, idCustomer, carW, carL, tag, shedW, shedL, orderStatus, date);
                     orders.add(order);
                 }
             }
@@ -96,7 +97,7 @@ public class OrderMapper {
         return orders;
     }
 
-    public Order createOrder(int idcustomer, int carW, int carL, int rooF, int shedW, int shedL, Date date) throws DatabaseException {
+    public Order createOrder(int idcustomer, int carW, int carL, int rooF, int shedW, int shedL, java.sql.Date date) throws DatabaseException {
         Order order;
         String status = "Started";
 
@@ -120,7 +121,7 @@ public class OrderMapper {
                 ResultSet rs = ps.getGeneratedKeys();
                 rs.next();
                 int idorder = rs.getInt(1);
-                order = new Order(idorder, idcustomer, carW, carL, rooF, shedW, shedL, status);
+                order = new Order(idorder, idcustomer, carW, carL, rooF, shedW, shedL, status, date);
             }
         } catch (SQLException ex) {
             throw new DatabaseException(ex, "Could not insert order into database");

@@ -31,7 +31,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <p class="card-text">Dato for bestilling: 9 Maj, 2022</p>
+                                <p class="card-text">Dato for bestilling: ${sessionScope.date}</p>
                             </div>
                             <div class="col-md-6">
                                 <p class="card-text">Vejledende pris: ${sessionScope.price} kr.</p>

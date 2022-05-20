@@ -68,6 +68,8 @@ public class AddOrder extends HttpServlet
             Order order = orderMapper.createOrder(user.getIdUser(), carportBred, carportLængde, tag, skurBred, skurLængde, date);
             orders.add(order);
             session.setAttribute("orders", orders);
+            String dateLast = order.dateToString();
+            session.setAttribute("date", dateLast);
             stykListMapper.createStykList(order.getIdOrder(), carportLængde, carportBred, skurLængde, skurBred);
             StykList stykList = stykListMapper.readStykList(order.getIdOrder());
             int price = stykListMapper.calcPrice(stykList.getRtList(), stykList.getSfList());

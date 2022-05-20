@@ -18,7 +18,7 @@ public class Order {
     // Include price and maybe some reference to a list of pieces
 
 
-    public Order(int idOrder, int idCustomer, int carportBred, int carportLængde, int tag, int skurBred, int skurLængde, String orderStatus) {
+    public Order(int idOrder, int idCustomer, int carportBred, int carportLængde, int tag, int skurBred, int skurLængde, String orderStatus, java.sql.Date date) {
         this.idOrder = idOrder;
         this.idCustomer = idCustomer;
         this.carportBred = carportBred;
@@ -27,6 +27,7 @@ public class Order {
         this.skurBred = skurBred;
         this.skurLængde = skurLængde;
         this.orderStatus = orderStatus;
+        this.date = date;
     }
 
 
