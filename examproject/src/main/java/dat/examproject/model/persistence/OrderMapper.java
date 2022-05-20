@@ -4,6 +4,8 @@ import dat.examproject.model.entities.*;
 import dat.examproject.model.exceptions.DatabaseException;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -24,6 +26,7 @@ public class OrderMapper {
         int shedW;
         int shedL;
         String orderStatus;
+        java.sql.Date date;
 
         String sql = "SELECT * FROM orders WHERE idcustomer = ?";
 
@@ -39,8 +42,10 @@ public class OrderMapper {
                     shedW = rs.getInt("shedw");
                     shedL = rs.getInt("shedl");
                     orderStatus = rs.getString("status");
+                    date = rs.getDate("date");
 
                     order = new Order(idOrder, idCustomer, carW, carL, tag, shedW, shedL, orderStatus);
+                    order.setDate(date);
                     orders.add(order);
                 }
             }
@@ -91,11 +96,11 @@ public class OrderMapper {
         return orders;
     }
 
-    public Order createOrder(int idcustomer, int carW, int carL, int rooF, int shedW, int shedL) throws DatabaseException {
+    public Order createOrder(int idcustomer, int carW, int carL, int rooF, int shedW, int shedL, Date date) throws DatabaseException {
         Order order;
         String status = "Started";
 
-        String sql = "insert into orders (idcustomer, carw, carl, roof, shedw, shedl) values (?,?,?,?,?,?)";
+        String sql = "insert into orders (idcustomer, carw, carl, roof, shedw, shedl, date) values (?,?,?,?,?,?,?)";
         try (Connection connection = connectionPool.getConnection()) {
             try (Statement stmt = connection.createStatement()) {
                 String sql2 = "alter table orders AUTO_INCREMENT = 1";
@@ -110,6 +115,7 @@ public class OrderMapper {
                 ps.setInt(4, rooF);
                 ps.setInt(5, shedW);
                 ps.setInt(6, shedL);
+                ps.setDate(7, date);
                 int rowsAffected = ps.executeUpdate();
                 ResultSet rs = ps.getGeneratedKeys();
                 rs.next();
@@ -202,28 +208,37 @@ public class OrderMapper {
         return orders;
     }
 
-    public java.util.Date orderDate(int orderid) throws DatabaseException {
-        java.util.Date date = new java.util.Date();
-        Calendar calendar = Calendar.getInstance();
-        //java.sql.Date sqlDate = new java.sql.Date(date.getda);
-        String sql = "INSERT into date (day,month,year) values (?,?,?)";
-        try (Connection connection = connectionPool.getConnection()) {
-            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-                stmt.setInt(1, calendar.get(Calendar.DATE));
-                stmt.setInt(2, calendar.get(Calendar.MONTH));
-                stmt.setInt(3, calendar.get(Calendar.YEAR));
-                //dag
-                //måned
-                //år
-                stmt.setInt(2, orderid);
-                stmt.executeUpdate();
+//    public java.util.Date orderDate(int orderid) throws DatabaseException {
+//        java.util.Date date = new java.util.Date();
+//        Calendar calendar = Calendar.getInstance();
+//        //java.sql.Date sqlDate = new java.sql.Date(date.getda);
+//        String sql = "INSERT into date (day,month,year) values (?,?,?)";
+//        try (Connection connection = connectionPool.getConnection()) {
+//            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+//                stmt.setInt(1, calendar.get(Calendar.DATE));
+//                stmt.setInt(2, calendar.get(Calendar.MONTH));
+//                stmt.setInt(3, calendar.get(Calendar.YEAR));
+//                //dag
+//                //måned
+//                //år
+//                stmt.setInt(2, orderid);
+//                stmt.executeUpdate();
+//
+//            }
+//        } catch (SQLException ex) {
+//            throw new DatabaseException(ex, "dato fejl");
+//        }
+//        return date;
+//    }
 
-            }
-        } catch (SQLException ex) {
-            throw new DatabaseException(ex, "dato fejl");
-        }
+    public java.sql.Date orderDate() throws DatabaseException {
+        //java.util.Date date = new java.util.Date();
+        //Calendar calendar = Calendar.getInstance();
+        long milli = System.currentTimeMillis();
+        java.sql.Date date = new java.sql.Date(milli);
         return date;
     }
+
 
     public ArrayList<ArrayList<Order>> ordersByStatus(ArrayList<Order> orders){
         ArrayList<ArrayList<Order>> compiledOrders = new ArrayList<>();
@@ -243,5 +258,7 @@ public class OrderMapper {
         }
         return compiledOrders;
     }
+
+
 
 }

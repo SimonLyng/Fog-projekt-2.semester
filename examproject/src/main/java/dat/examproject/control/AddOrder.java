@@ -64,8 +64,8 @@ public class AddOrder extends HttpServlet
         int skurLængde = Integer.parseInt(request.getParameter("shedL2"));
         User user = (User) session.getAttribute("user");
         try {
-            Order order = orderMapper.createOrder(user.getIdUser(), carportBred, carportLængde, tag, skurBred, skurLængde);
-            //order.setDate(orderMapper.orderDate(order.getIdOrder()));
+            java.sql.Date date = orderMapper.orderDate();
+            Order order = orderMapper.createOrder(user.getIdUser(), carportBred, carportLængde, tag, skurBred, skurLængde, date);
             orders.add(order);
             session.setAttribute("orders", orders);
             stykListMapper.createStykList(order.getIdOrder(), carportLængde, carportBred, skurLængde, skurBred);

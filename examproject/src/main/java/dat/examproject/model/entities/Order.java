@@ -1,5 +1,7 @@
 package dat.examproject.model.entities;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -12,7 +14,7 @@ public class Order {
     private int skurBred;
     private int skurLængde;
     private String orderStatus;
-    private Date date;
+    private java.sql.Date date;
     // Include price and maybe some reference to a list of pieces
 
 
@@ -33,9 +35,16 @@ public class Order {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(java.sql.Date date) {
         this.date = date;
     }
+
+    public String dateToString(){
+        DateFormat formatD = new SimpleDateFormat("dd/MMM/yyyy");
+        String dateFormat = formatD.format(this.date);
+        return dateFormat;
+    }
+
     public int getIdOrder() {
         return idOrder;
     }

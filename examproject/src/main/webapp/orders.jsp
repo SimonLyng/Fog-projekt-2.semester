@@ -25,6 +25,7 @@
                 <th scope="col">Skur længde</th>
                 <th scope="col">Skur bredde</th>
                 <th scope="col">Status</th>
+                <th scope="col">Dato for bestilling</th>
                 <th scope="col">Styklister</th>
                 <%--ToDo: Ikke kunne slette ordre, hvis den er betalt?--%>
                 <th scope="col">Slet ordre</th>
@@ -39,6 +40,8 @@
                     <td>${Integer.parseInt(order.getSkurLængde())}</td>
                     <td>${Integer.parseInt(order.getSkurBred())}</td>
                     <td>${order.getOrderStatus()}</td>
+
+                    <td>${order.getDate()}</td>
                     <td>
                         <c:if test="${order.getOrderStatus().equals('Started')}">
                             <button type="button" class="btn btn-primary" disabled>Stykliste</button>
