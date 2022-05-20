@@ -74,9 +74,6 @@ public class Login extends HttpServlet
             session.setAttribute("user", user); // adding user object to session scope
             if(user.getRole().equalsIgnoreCase("user")) {
                 session = request.getSession();
-                for(Order o : orders){
-                    orderMapper.updateOrders(user.getIdUser(), o.getIdOrder());
-                }
                 ArrayList<Order> previousOrders = orderMapper.getOrders(user.getIdUser());
                 session.setAttribute("orders", previousOrders);
                 StykList stykList = stykListMapper.readStykList(user.getIdUser());

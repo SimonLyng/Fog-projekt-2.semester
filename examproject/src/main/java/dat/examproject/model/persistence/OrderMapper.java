@@ -129,17 +129,41 @@ public class OrderMapper {
         return order;
     }
 
-    public void updateOrders(int idCustommer, int idOrder) {
-        String sql = "UPDATE orders SET idcustomer = ? WHERE idorder = ?";
+    public ArrayList<Order> updateOrder(int idOrder, int carW, int carL, int shedW, int shedL) throws DatabaseException {
+        String sql = "UPDATE orders set carw = ? AND carl = ? AND shedw = ? AND shedl = ? WHERE idorders = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-                stmt.setInt(1, idCustommer);
-                stmt.setInt(2, idOrder);
+                stmt.setInt(1, carW);
+                stmt.setInt(2, carL);
+                stmt.setInt(3, shedW);
+                stmt.setInt(4, shedL);
+                stmt.setInt(5, idOrder);
                 stmt.executeUpdate();
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw new DatabaseException(ex, "Noget");
         }
+        sql = "DELETE FROM rtpiecelist WHERE orderid = ?";
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+                stmt.setInt(1, idOrder);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex, "Noget");
+        }
+        sql = "DELETE FROM sfpiecelist WHERE orderid = ?";
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+                stmt.setInt(1, idOrder);
+                stmt.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex, "Noget");
+        }
+        StykListMapper stykListMapper = new StykListMapper(connectionPool);
+        stykListMapper.createStykList(idOrder, carL, carW, shedL, shedW);
+        return getAllOrders();
     }
 
     public ArrayList<Order> updateStatusOrders(String statuS, int idOrder) throws DatabaseException {
