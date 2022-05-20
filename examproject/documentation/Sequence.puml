@@ -1,0 +1,22 @@
+@startuml
+title "Johannes fog - Sequence Diagram"
+
+actor Bruger #red/yellow
+boundary index.jsp #Orange/yellow
+boundary Orders.jsp #Orange/yellow
+participant LoginServlet #Orange/Salmon
+participant StyklistServlet #Orange/Salmon
+database ShopDatabase #Chocolate
+
+Bruger -> index.jsp : Bruger & Carport
+index.jsp -> Orders.jsp: Order sendes
+index.jsp -> LoginServlet: http POST log ind
+LoginServlet -> StyklistServlet: Ordre accepteres
+StyklistServlet -> ShopDatabase: Stykliste sendes
+ShopDatabase -> StyklistServlet: Stykliste
+StyklistServlet -> StyklistServlet: validate Stykliste
+StyklistServlet -> LoginServlet: OK
+LoginServlet -> Orders.jsp: Accepteres af admin
+Orders.jsp -> Bruger: Succes
+
+@endum
