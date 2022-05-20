@@ -41,7 +41,7 @@
                     <td>${Integer.parseInt(order.getSkurBred())}</td>
                     <td>${order.getOrderStatus()}</td>
 
-                    <td>${order.getDate()}</td>
+                    <td>${order.dateToString()}</td>
                     <td>
                         <c:if test="${order.getOrderStatus().equals('Started')}">
                             <button type="button" class="btn btn-primary" disabled>Stykliste</button>

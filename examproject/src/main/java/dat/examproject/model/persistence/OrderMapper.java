@@ -209,29 +209,6 @@ public class OrderMapper {
         return orders;
     }
 
-//    public java.util.Date orderDate(int orderid) throws DatabaseException {
-//        java.util.Date date = new java.util.Date();
-//        Calendar calendar = Calendar.getInstance();
-//        //java.sql.Date sqlDate = new java.sql.Date(date.getda);
-//        String sql = "INSERT into date (day,month,year) values (?,?,?)";
-//        try (Connection connection = connectionPool.getConnection()) {
-//            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-//                stmt.setInt(1, calendar.get(Calendar.DATE));
-//                stmt.setInt(2, calendar.get(Calendar.MONTH));
-//                stmt.setInt(3, calendar.get(Calendar.YEAR));
-//                //dag
-//                //måned
-//                //år
-//                stmt.setInt(2, orderid);
-//                stmt.executeUpdate();
-//
-//            }
-//        } catch (SQLException ex) {
-//            throw new DatabaseException(ex, "dato fejl");
-//        }
-//        return date;
-//    }
-
     public java.sql.Date orderDate() throws DatabaseException {
         //java.util.Date date = new java.util.Date();
         //Calendar calendar = Calendar.getInstance();

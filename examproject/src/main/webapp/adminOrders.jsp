@@ -30,8 +30,7 @@
                             <th scope="col">Carport længde</th>
                             <th scope="col">Skur bredde</th>
                             <th scope="col">Skur længde</th>
-                            <th scope="col">Carport tag</th>
-                            <th></th>
+                            <th scope="col">Dato</th>
                             <c:if test="${list.get(0).getOrderStatus().equals('Started')}">
                                 <th scope="col">Rediger ordre</th>
                                 <th scope="col">Fjern ordre</th>
@@ -53,8 +52,7 @@
                                 <td id="carLVal${order.idOrder}">${order.carportLængde}</td>
                                 <td id="shedWVal${order.idOrder}">${order.skurBred}</td>
                                 <td id="shedLVal${order.idOrder}">${order.skurLængde}</td>
-                                <td>${order.tag}</td>
-                                <td>${order.date}</td>
+                                <td>${order.dateToString()}</td>
                                 <c:if test="${order.orderStatus.equals('Started')}">
                                     <td>
                                         <button class="btn btn-primary" onclick="editOrder(${order.idOrder}, this)">
