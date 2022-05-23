@@ -130,7 +130,7 @@ public class OrderMapper {
     }
 
     public ArrayList<Order> updateOrder(int idOrder, int carW, int carL, int shedW, int shedL) throws DatabaseException {
-        String sql = "UPDATE orders set carw = ? AND carl = ? AND shedw = ? AND shedl = ? WHERE idorders = ?";
+        String sql = "UPDATE orders set carw = ?, carl = ?, shedw = ?, shedl = ? WHERE idorders = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement stmt = connection.prepareStatement(sql)) {
                 stmt.setInt(1, carW);

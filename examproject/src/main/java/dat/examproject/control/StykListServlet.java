@@ -42,6 +42,7 @@ public class StykListServlet extends HttpServlet
         response.setContentType("text/html");
         HttpSession session = request.getSession();
         ArrayList<Order> orders = new ArrayList<>();
+        OrderMapper orderMapper = new OrderMapper(connectionPool);
         // If any orders has been made, in the time the user has been on the website, this will get those orders
         // Gets orders
         if (session.getAttribute("orders") != null) {
@@ -54,11 +55,17 @@ public class StykListServlet extends HttpServlet
 
         session = request.getSession();
         int orderID = Integer.parseInt(request.getParameter("orderid"));
-
+        Order order = null;
         try {
             StykList stykList = stykListMapper.readStykList(orderID);
+            for(Order o : orders){
+                if(o.getIdOrder() == orderID){
+                    order = o;
+                }
+            }
             session.setAttribute("sf", stykList.getSfList());
             session.setAttribute("rt", stykList.getRtList());
+            session.setAttribute("temporder", order);
         }
         catch (DatabaseException e)
         {

@@ -1,6 +1,7 @@
 package dat.examproject.control;
 
 import dat.examproject.model.config.ApplicationStart;
+import dat.examproject.model.entities.Order;
 import dat.examproject.model.exceptions.DatabaseException;
 import dat.examproject.model.persistence.ConnectionPool;
 import dat.examproject.model.persistence.OrderMapper;
@@ -9,6 +10,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "editorder", value = "/editorder")
 public class EditOrder extends HttpServlet {
@@ -33,14 +35,13 @@ public class EditOrder extends HttpServlet {
         int carL = Integer.parseInt(request.getParameter("carL"));
         int shedW = Integer.parseInt(request.getParameter("shedW"));
         int shedL = Integer.parseInt(request.getParameter("shedL"));
-        System.out.println(carW);
-        System.out.println(carL);
-        System.out.println(shedW);
-        System.out.println(shedL);
     
         OrderMapper orderMapper = new OrderMapper(connectionPool);
         try {
-            request.getSession().setAttribute("orders", orderMapper.updateOrder(idOrder, carW, carL, shedW, shedL));
+            ArrayList<Order> orders = orderMapper.updateOrder(idOrder, carW, carL, shedW, shedL);
+            request.getSession().setAttribute("orders", orders);
+            ArrayList<ArrayList<Order>> compiledOrders = orderMapper.ordersByStatus(orders);
+            request.getSession().setAttribute("compiledOrders", compiledOrders);
         } catch (DatabaseException e) {
             e.printStackTrace();
         }

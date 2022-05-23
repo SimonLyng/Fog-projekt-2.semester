@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page errorPage="error.jsp" isErrorPage="false" %>
 
-<c:set var="order" value="${sessionScope.orders.get(sessionScope.orders.size() - 1)}"/>
+<c:set var="order" value="${sessionScope.temporder}"/>
 
 <t:pagetemplate>
     <jsp:attribute name="header">
