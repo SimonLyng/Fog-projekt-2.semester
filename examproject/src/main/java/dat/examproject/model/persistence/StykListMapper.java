@@ -151,100 +151,86 @@ public class StykListMapper {
     public void createStykList(int idOrder, int carLength, int carWidth, int shedLength, int shedWidth) throws DatabaseException {
 
         Calculator calculator = new Calculator();
-        ArrayList<RTList> rtLists = new ArrayList<>();
-        RTList rt;
-        ArrayList<SFList> sfLists = new ArrayList<>();
         boolean shed = true;
         if(shedLength < 1 || shedWidth < 1){
             shed = false;
         }
 
         // Understernbrædder til for og bag ende
-        rtLists.addAll(entry(calculator.calMultiple(carWidth, 540, 360, 2),
-                idOrder, 2, 1, "understernbrædder til for & bag ende"));
+        entry(calculator.calMultiple(carWidth, 540, 360, 2),
+                idOrder, 2, 1, "understernbrædder til for & bag ende");
         // Understernbræder til siderne
-        rtLists.addAll(entry(calculator.calMultiple(carLength, 540, 360, 2),
-                idOrder, 2, 1, "understernbrædder til siderne"));
+        entry(calculator.calMultiple(carLength, 540, 360, 2),
+                idOrder, 2, 1, "understernbrædder til siderne");
         // Oversternbrædder til forenden
-        rtLists.addAll(entry(calculator.calMultiple(carWidth, 540, 360, 1),
-                idOrder, 4, 3, "oversternbrædder til forenden"));
+        entry(calculator.calMultiple(carWidth, 540, 360, 1),
+                idOrder, 4, 3, "oversternbrædder til forenden");
         // Oversternbrædder til siderne
-        rtLists.addAll(entry(calculator.calMultiple(carLength, 540, 360, 2),
-                idOrder, 4, 3, "oversternbrædder til siderne"));
+        entry(calculator.calMultiple(carLength, 540, 360, 2),
+                idOrder, 4, 3, "oversternbrædder til siderne");
         if(shed == true){
             // Til z på bagside af dør
-            rt = new RTList(idOrder, 5, 1);
             createRT(idOrder, 5, 1, "til z på bagside af dør");
-            // Tilføj message
-            rtLists.add(rt);
             // løsholter til skur gavle
-            rtLists.addAll(entry(calculator.calMultiple(shedWidth, 270, 240, 6),
-                    idOrder, 6, 7, "løsholter til skur gavle"));// løsholter til skur gavle
+            entry(calculator.calMultiple(shedWidth, 270, 240, 6),
+                    idOrder, 6, 7, "løsholter til skur gavle");// løsholter til skur gavle
             // løsholter til skur side
-            rtLists.addAll(entry(calculator.calMultiple(shedLength, 270, 240, 4),
-                    idOrder, 6, 7, "løsholter til skur sider"));
+            entry(calculator.calMultiple(shedLength, 270, 240, 4),
+                    idOrder, 6, 7, "løsholter til skur sider");
             // Remme i sider (skur)
-            rtLists.addAll(entry(calculator.calMultiple(shedLength*2, 600, 480, 1),
-                    idOrder, 8, 9, "Remme i sider, sadles ned i stopler (skur del, deles)"));
-//            rtLists.addAll(entry(calculator.calMultiple(shedLength, 300, 240, 1),
+            entry(calculator.calMultiple(shedLength*2, 600, 480, 1),
+                    idOrder, 8, 9, "Remme i sider, sadles ned i stopler (skur del, deles)");
+//            entry(calculator.calMultiple(shedLength, 300, 240, 1),
 //                    idOrder, 8, 9, "Remme i sider, sadles ned i stopler (skur del, deles)"));
             // Bræder til beklædning af skur 1 på 2
-            rt = new RTList(idOrder, 11, calculator.calShedBoards(shedLength, shedWidth));
-            createRT(idOrder, 11, rt.getAmount(), "til beklædning af skur 1 på 2");
-            // Tilføj message
-            rtLists.add(rt);
+            createRT(idOrder, 11, calculator.calShedBoards(shedLength, shedWidth), "til beklædning af skur 1 på 2");
         }
         // Remme i sider (carport)
-        rtLists.addAll(entry(calculator.calMultiple(carLength-shedLength, 600, 480, 2),
-                idOrder, 8, 9, "Remme i sider, sadles ned i stopler"));
+        entry(calculator.calMultiple(carLength-shedLength, 600, 480, 2),
+                idOrder, 8, 9, "Remme i sider, sadles ned i stopler");
         // Spær
-        rtLists.addAll(entry(calculator.calMultiple(carWidth, 600, 480, calculator.calRafters(carLength)),
-                idOrder, 8, 9, "Spær, monteres på rem"));
-        rt = new RTList(idOrder, 10, calculator.calPost(carLength, shed));
-        createRT(idOrder, 10, rt.getAmount(), "Stolper nedgraves 90 cm. i jord");
-        // Tilføj message
-        rtLists.add(rt);
+        entry(calculator.calMultiple(carWidth, 600, 480, calculator.calRafters(carLength)),
+                idOrder, 8, 9, "Spær, monteres på rem");
+        createRT(idOrder, 10, calculator.calPost(carLength, shed), "Stolper nedgraves 90 cm. i jord");
         // Vandbrædt sider
-        rtLists.addAll(entry(calculator.calMultiple(carLength, 540, 360, 2),
-                idOrder, 12, 13, "vandbrædt på stern i sider"));
+        entry(calculator.calMultiple(carLength, 540, 360, 2),
+                idOrder, 12, 13, "vandbrædt på stern i sider");
         // Oversternbrædder til siderne
-        rtLists.addAll(entry(calculator.calMultiple(carWidth, 540, 360, 1),
-                idOrder, 12, 13, "vandbrædt på stern i forende"));
+        entry(calculator.calMultiple(carWidth, 540, 360, 1),
+                idOrder, 12, 13, "vandbrædt på stern i forende");
         // Tagplader
-        rtLists.addAll(entry(calculator.calRoof(carWidth, carLength),
-                idOrder, 14, 15, "tagplader monteres på spær"));
+        entry(calculator.calRoof(carWidth, carLength),
+                idOrder, 14, 15, "tagplader monteres på spær");
 
         //Skruer og hæng
         ArrayList<Integer> screwFittingids = new ArrayList<>(
                 Arrays.asList(1,2,3,4,5,6,7,8,9,10,11,12,13)
         );
         for(int i = 1; i <= screwFittingids.size(); i++){
-            SFList sf = new SFList(idOrder, i, calculator.calScrews(carWidth, carLength).get(i-1));
             createSF(idOrder, i, calculator.calScrews(carWidth, carLength).get(i-1));
-            sfLists.add(sf);
         }
 
     }
-    public ArrayList<RTList> entry(Map<String, Integer> mapEntry, int idOrder, int idLong, int idShort, String message) throws DatabaseException {
-        ArrayList<RTList> rtLists = new ArrayList<>();
-        RTList rtEntry;
+    public void entry(Map<String, Integer> mapEntry, int idOrder, int idLong, int idShort, String message) throws DatabaseException {
+        //ArrayList<RTList> rtLists = new ArrayList<>();
+        //RTList rtEntry;
         int longAmount = mapEntry.getOrDefault("long", 0);
         int shortAmount = mapEntry.getOrDefault("short", 0);
         if(longAmount > 0){
-            rtEntry = new RTList(idOrder, idLong, longAmount);
+            //rtEntry = new RTList(idOrder, idLong, longAmount);
             createRT(idOrder, idLong, longAmount, message);
-            rtLists.add(rtEntry);
+            //rtLists.add(rtEntry);
         }
         if(shortAmount > 0){
-            System.out.println("Her 1:" + idShort);
-            rtEntry = new RTList(idOrder, idShort, shortAmount);
-            System.out.println("Her 2:");
+            //System.out.println("Her 1:" + idShort);
+            //rtEntry = new RTList(idOrder, idShort, shortAmount);
+            //System.out.println("Her 2:");
             createRT(idOrder, idShort, shortAmount, message);
-            System.out.println("Her 3:");
+            //System.out.println("Her 3:");
             // I RT tilføj også beskrivelse, således at message1 og 2 kan bruges
-            rtLists.add(rtEntry);
+            //rtLists.add(rtEntry);
         }
-        return rtLists;
+        //return rtLists;
     }
 
     public StykList readStykList(int idOrder) throws DatabaseException {

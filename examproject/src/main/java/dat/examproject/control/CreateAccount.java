@@ -110,7 +110,7 @@ public class CreateAccount extends HttpServlet {
                     String dateLast = order.dateToString();
                     session.setAttribute("date", dateLast);
                     stykListMapper.createStykList(user.getIdUser(), carportLængde, carportBred, skurLængde, skurBred);
-                    StykList stykList = stykListMapper.readStykList(user.getIdUser());
+                    StykList stykList = stykListMapper.readStykList(order.getIdOrder());
                     int price = stykListMapper.calcPrice(stykList.getRtList(), stykList.getSfList());
                     session.setAttribute("rt", stykList.getRtList());
                     session.setAttribute("sf", stykList.getSfList());

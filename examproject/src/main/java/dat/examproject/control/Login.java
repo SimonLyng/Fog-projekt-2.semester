@@ -76,9 +76,6 @@ public class Login extends HttpServlet
                 session = request.getSession();
                 ArrayList<Order> previousOrders = orderMapper.getOrders(user.getIdUser());
                 session.setAttribute("orders", previousOrders);
-                StykList stykList = stykListMapper.readStykList(user.getIdUser());
-                session.setAttribute("rt", stykList.getRtList());
-                session.setAttribute("sf", stykList.getSfList());
             }
             else if(user.getRole().equalsIgnoreCase("admin")){
                 ArrayList<Order> allOrders = orderMapper.getAllOrders();

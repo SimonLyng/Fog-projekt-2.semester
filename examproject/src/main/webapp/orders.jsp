@@ -12,7 +12,7 @@
 
     <jsp:body>
 
-        <c:if test="${sessionScope.rt == null}">
+        <c:if test="${sessionScope.orders == null}">
             <p>Ingen varer er lagt i kurven</p>
         </c:if>
         <c:if test="${sessionScope.orders != null}">
