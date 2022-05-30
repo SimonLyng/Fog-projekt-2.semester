@@ -21,9 +21,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class StykListMapperTest {
 
-    private final static String USER = "root";
-    private final static String PASSWORD = "Dreng127";
-    private final static String URL = "jdbc:mysql://localhost:3306/testingtest";
+    private final static String USER = "fogdb";
+    private final static String PASSWORD = "fog";
+    private final static String URL = "jdbc:mysql://localhost:3306/fogdb_test";
 
     private static ConnectionPool connectionPool;
     private static StykListMapper stykListMapper;

@@ -24,7 +24,7 @@ class UserMapperTest
 
     @BeforeAll
     public static void setUpClass() {
-        connectionPool = new ConnectionPool("fogdb", "fog", "jdbc:mysql://localhost:3306/testingtest");
+        connectionPool = new ConnectionPool("fogdb", "fog", "jdbc:mysql://localhost:3306/fogdb_test");
         userMapper = new UserMapper(connectionPool);
     }
 

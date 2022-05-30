@@ -13,7 +13,7 @@ public class ConnectionPool
     private HikariDataSource ds;
     private static String USER = "fogdb";
     private static String PASSWORD = "fog";
-    private static String URL = "jdbc:mysql://localhost:3306/testing";
+    private static String URL = "jdbc:mysql://localhost:3306/fogdb";
 
     public ConnectionPool()
     {
