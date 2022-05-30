@@ -67,13 +67,15 @@ public class SF {
         this.price = price;
     }
 
-    //    @Override
-//    public boolean equals(Object o)
-//    {
-//        if (this == o) return true;
-//        if (!(o instanceof Order)) return false;
-//
-//        RTList order = (RTList) o;
-//        return getIdOrder() == order.getIdOrder() && getRtid() == order.getRtid() && getAmount() == order.getAmount();
-//    }
+    @Override
+    public boolean equals(Object sf)
+    {
+        if (this == sf) return true;
+        if (!(sf instanceof SF)) return false;
+
+        SF sfList = (SF) sf;
+        return getSfid() == sfList.getSfid() && getType().equals(((SF) sf).getType()) &&
+                getDescription().equals(((SF) sf).getDescription()) && getUnit().equals(((SF) sf).getUnit()) &&
+                getAmount() == ((SF) sf).getAmount() && getPrice() == ((SF) sf).getPrice();
+    }
 }

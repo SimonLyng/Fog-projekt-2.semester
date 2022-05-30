@@ -109,13 +109,14 @@ public class CreateAccount extends HttpServlet {
                     session.setAttribute("orders", orders);
                     String dateLast = order.dateToString();
                     session.setAttribute("date", dateLast);
-                    stykListMapper.createStykList(user.getIdUser(), carportLængde, carportBred, skurLængde, skurBred);
+                    stykListMapper.createStykList(order.getIdOrder(), carportLængde, carportBred, skurLængde, skurBred);
                     StykList stykList = stykListMapper.readStykList(order.getIdOrder());
                     int price = stykListMapper.calcPrice(stykList.getRtList(), stykList.getSfList());
+                    System.out.println("Price: "+price+" rt: "+stykList.getRtList().size()+" sf: "+stykList.getSfList().size());
                     session.setAttribute("rt", stykList.getRtList());
                     session.setAttribute("sf", stykList.getSfList());
                     session.setAttribute("price", price);
-                    request.getRequestDispatcher("orders.jsp").forward(request, response);
+                    request.getRequestDispatcher("orderAccept.jsp").forward(request, response);
                 } else {
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                 }

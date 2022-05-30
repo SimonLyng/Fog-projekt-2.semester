@@ -1,8 +1,5 @@
--- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
---
--- Host: 127.0.0.1    Database: testing
--- ------------------------------------------------------
--- Server version	8.0.27
+CREATE DATABASE  IF NOT EXISTS `fogdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `fogdb`;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -33,7 +30,7 @@ CREATE TABLE `orders` (
   `status` varchar(45) NOT NULL DEFAULT 'Started',
   `date` date NOT NULL,
   PRIMARY KEY (`idorders`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +39,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,1,540,420,1,570,450,'Started','2022-05-20'),(2,1,600,780,1,540,210,'Started','2022-05-20');
+INSERT INTO `orders` VALUES (1,2,600,780,1,540,210,'Started','2022-05-30');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,7 +66,7 @@ CREATE TABLE `paycard` (
 
 LOCK TABLES `paycard` WRITE;
 /*!40000 ALTER TABLE `paycard` DISABLE KEYS */;
-INSERT INTO `paycard` VALUES (1,'4571346123900182',8,93,545),(2,'4571089123437323',9,92,541);
+INSERT INTO `paycard` VALUES (1,'4571346123900182',8,93,545),(2,'4571290283901238',2,9,728);
 /*!40000 ALTER TABLE `paycard` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,7 +111,7 @@ CREATE TABLE `rtpiecelist` (
   `amount` int NOT NULL,
   `description` varchar(75) NOT NULL,
   PRIMARY KEY (`rtpiecelistid`)
-) ENGINE=InnoDB AUTO_INCREMENT=516 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=908 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,7 +120,7 @@ CREATE TABLE `rtpiecelist` (
 
 LOCK TABLES `rtpiecelist` WRITE;
 /*!40000 ALTER TABLE `rtpiecelist` DISABLE KEYS */;
-INSERT INTO `rtpiecelist` VALUES (482,1,2,2,'understernbrædder til for & bag ende'),(483,1,2,2,'understernbrædder til siderne'),(484,1,4,1,'oversternbrædder til forenden'),(485,1,4,2,'oversternbrædder til siderne'),(486,1,5,1,'til z på bagside af dør'),(487,1,6,12,'løsholter til skur gavle'),(488,1,7,6,'løsholter til skur gavle'),(489,1,7,8,'løsholter til skur sider'),(490,1,9,2,'Remme i sider, sadles ned i stopler (skur del, deles)'),(491,1,11,300,'til beklædning af skur 1 på 2'),(492,1,9,2,'Remme i sider, sadles ned i stopler'),(493,1,8,9,'Spær, monteres på rem'),(494,1,10,9,'Stolper nedgraves 90 cm. i jord'),(495,1,12,2,'vandbrædt på stern i sider'),(496,1,12,1,'vandbrædt på stern i forende'),(497,1,14,6,'tagplader monteres på spær'),(498,2,1,4,'understernbrædder til for & bag ende'),(499,2,2,2,'understernbrædder til siderne'),(500,2,1,2,'understernbrædder til siderne'),(501,2,3,2,'oversternbrædder til forenden'),(502,2,4,2,'oversternbrædder til siderne'),(503,2,3,2,'oversternbrædder til siderne'),(504,2,5,1,'til z på bagside af dør'),(505,2,6,12,'løsholter til skur gavle'),(506,2,7,4,'løsholter til skur sider'),(507,2,9,1,'Remme i sider, sadles ned i stopler (skur del, deles)'),(508,2,11,200,'til beklædning af skur 1 på 2'),(509,2,8,2,'Remme i sider, sadles ned i stopler'),(510,2,8,15,'Spær, monteres på rem'),(511,2,10,11,'Stolper nedgraves 90 cm. i jord'),(512,2,12,2,'vandbrædt på stern i sider'),(513,2,13,2,'vandbrædt på stern i sider'),(514,2,13,2,'vandbrædt på stern i forende'),(515,2,14,10,'tagplader monteres på spær');
+INSERT INTO `rtpiecelist` VALUES (890,1,1,4,'understernbrædder til for & bag ende'),(891,1,2,2,'understernbrædder til siderne'),(892,1,1,2,'understernbrædder til siderne'),(893,1,3,2,'oversternbrædder til forenden'),(894,1,4,2,'oversternbrædder til siderne'),(895,1,3,2,'oversternbrædder til siderne'),(896,1,5,1,'til z på bagside af dør'),(897,1,6,12,'løsholter til skur gavle'),(898,1,7,4,'løsholter til skur sider'),(899,1,9,1,'Remme i sider, sadles ned i stopler (skur del, deles)'),(900,1,11,200,'til beklædning af skur 1 på 2'),(901,1,8,2,'Remme i sider, sadles ned i stopler'),(902,1,8,15,'Spær, monteres på rem'),(903,1,10,11,'Stolper nedgraves 90 cm. i jord'),(904,1,12,2,'vandbrædt på stern i sider'),(905,1,13,2,'vandbrædt på stern i sider'),(906,1,13,2,'vandbrædt på stern i forende'),(907,1,14,10,'tagplader monteres på spær');
 /*!40000 ALTER TABLE `rtpiecelist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,7 +164,7 @@ CREATE TABLE `sfpiecelist` (
   `sfid` int NOT NULL,
   `amount` int NOT NULL,
   PRIMARY KEY (`sfpiecelistid`)
-) ENGINE=InnoDB AUTO_INCREMENT=391 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=690 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +173,7 @@ CREATE TABLE `sfpiecelist` (
 
 LOCK TABLES `sfpiecelist` WRITE;
 /*!40000 ALTER TABLE `sfpiecelist` DISABLE KEYS */;
-INSERT INTO `sfpiecelist` VALUES (365,1,1,2),(366,1,2,1),(367,1,3,8),(368,1,4,8),(369,1,5,1),(370,1,6,2),(371,1,7,9),(372,1,8,6),(373,1,9,1),(374,1,10,1),(375,1,11,1),(376,1,12,1),(377,1,13,16),(378,2,1,3),(379,2,2,2),(380,2,3,15),(381,2,4,15),(382,2,5,1),(383,2,6,3),(384,2,7,18),(385,2,8,12),(386,2,9,2),(387,2,10,2),(388,2,11,1),(389,2,12,2),(390,2,13,32);
+INSERT INTO `sfpiecelist` VALUES (677,1,1,3),(678,1,2,2),(679,1,3,15),(680,1,4,15),(681,1,5,1),(682,1,6,3),(683,1,7,18),(684,1,8,12),(685,1,9,2),(686,1,10,2),(687,1,11,1),(688,1,12,2),(689,1,13,32);
 /*!40000 ALTER TABLE `sfpiecelist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,7 +202,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (0,'ad@mail.dk','1234','Troels','52679201',NULL,'admin'),(1,'ku@live.dk','4321','Mia','45823909',1,'user'),(2,'l@mail.dk','1234','Lauritz','56902891',2,'user');
+INSERT INTO `user` VALUES (0,'admin@live.dk','4321','admin','87654321',0,'admin'),(1,'user@live.dk','1234','user','12345678',1,'user'),(2,'claes@live.dk','1234','Claes','81283912',2,'user');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -218,4 +215,12 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-20 11:25:49
+CREATE DATABASE  IF NOT EXISTS `fogdb_test` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `fogdb_test`;
+CREATE TABLE fogdb_test.user LIKE fogdb.user;
+CREATE TABLE fogdb_test.orders LIKE fogdb.orders;
+CREATE TABLE fogdb_test.paycard LIKE fogdb.paycard;
+CREATE TABLE fogdb_test.rt LIKE fogdb.rt;
+CREATE TABLE fogdb_test.rtpiecelist LIKE fogdb.rtpiecelist;
+CREATE TABLE fogdb_test.sf LIKE fogdb.sf;
+CREATE TABLE fogdb_test.sfpiecelist LIKE fogdb.sfpiecelist;

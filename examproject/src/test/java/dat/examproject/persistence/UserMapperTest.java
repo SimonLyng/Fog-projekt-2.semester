@@ -24,7 +24,7 @@ class UserMapperTest
 
     @BeforeAll
     public static void setUpClass() {
-        connectionPool = new ConnectionPool();
+        connectionPool = new ConnectionPool("fogdb", "fog", "jdbc:mysql://localhost:3306/testingtest");
         userMapper = new UserMapper(connectionPool);
     }
 
@@ -35,12 +35,16 @@ class UserMapperTest
             try (Statement stmt = testConnection.createStatement() ) {
                 // Remove all rows from all tables
                 stmt.execute("delete from user");
+                stmt.execute("delete from paycard");
                 // Resets the AUTO_INCREMENT of iduser
-                //stmt.execute("ALTER TABLE user AUTO_INCREMENT=1");
+                stmt.execute("ALTER TABLE paycard AUTO_INCREMENT=1");
                 // Indsæt et par brugere
                 stmt.execute("insert into user (iduser, mail, password, name, phone, idcard, role) " +
-                        "values (1, 'user@live.dk','1234','user',12345678,0,'user'),(0,'admin@live.dk','4321','admin',87654321,0,'admin'), " +
-                        "(2,'Ben@gmail.com','1234','Ben',36795665,1,'user');");
+                        "values (1, 'user@live.dk','1234','user',12345678,1,'user'),(0,'admin@live.dk','4321','admin',87654321,0,'admin'), " +
+                        "(2,'Ben@gmail.com','1234','Ben',36795665,2,'user');");
+
+                stmt.execute("insert into paycard (idcard, cardnr, expmonth, expyear, cvc) " +
+                        "values (1, '457109', 09, 22, 561), (2, '457102',02,23,691)");
             }
         } catch (SQLException throwables) {
             System.out.println(throwables.getMessage());
@@ -62,7 +66,7 @@ class UserMapperTest
     @Test
     void login() throws DatabaseException
     {
-        User expectedUser = new User(2, "Ben@gmail.com","1234", "Ben","36795665",1, "user");
+        User expectedUser = new User(2, "Ben@gmail.com","1234", "Ben","36795665",2, "user");
         User actualUser = userMapper.login("Ben@gmail.com","1234");
         assertEquals(expectedUser, actualUser);
     }
@@ -74,7 +78,7 @@ class UserMapperTest
     }
 
     @Test
-    void invalidUserNameLogin() throws DatabaseException
+    void invalidEmailLogin() throws DatabaseException
     {
         assertThrows(DatabaseException.class, () -> userMapper.login("bob@gmail.com","1234"));
     }
@@ -84,14 +88,21 @@ class UserMapperTest
     {
         userMapper.createUser("Jill@gmail.com", "1234", "Jill", "34895662",  "user", "4571", 5, 20, 876);
         User logInUser = userMapper.login("Jill@gmail.com","1234");
-        User expectedUser = new User(3, "Jill@gmail.com", "1234", "Jill", "34895662", 2, "user");
-        //assertEquals(expectedUser, newUser);
+        User expectedUser = new User(3, "Jill@gmail.com", "1234", "Jill", "34895662", 3, "user");
         assertEquals(expectedUser, logInUser);
 
     }
+
     @Test
-    void UpdateStatusOrder() throws DatabaseException {
-        OrderMapper orderMapper = new OrderMapper(connectionPool);
-        ArrayList<Order> orders = orderMapper.updateStatusOrders("Started", 1);
+    void readCustomerListTest() throws  DatabaseException{
+        ArrayList<User> expectedCustomers = new ArrayList<>();
+        User user1 = new User(1, "user@live.dk","1234","user","12345678",1,"user");
+        User user2 = new User(2,"Ben@gmail.com","1234","Ben","36795665",2,"user");
+        expectedCustomers.add(user1);
+        expectedCustomers.add(user2);
+        ArrayList<User> actualCustomers = userMapper.readCustomerList("user");
+        for(int i = 0; i < actualCustomers.size(); i++){
+            assertEquals(expectedCustomers.get(i), actualCustomers.get(i));
+        }
     }
 }

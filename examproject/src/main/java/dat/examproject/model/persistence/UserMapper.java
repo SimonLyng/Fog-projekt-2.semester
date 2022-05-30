@@ -162,22 +162,4 @@ public class UserMapper implements IUserMapper
         }
     }
 
-    public void pay(int money, int idUser){
-
-        String sql = "UPDATE user SET money = ? WHERE iduser = ?";
-        try (Connection connection = connectionPool.getConnection())
-        {
-            try (PreparedStatement stmt = connection.prepareStatement(sql))
-            {
-                stmt.setInt(1, money);
-                stmt.setInt(2, idUser);
-                stmt.executeUpdate();
-            }
-        }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
-        }
-    }
-
 }

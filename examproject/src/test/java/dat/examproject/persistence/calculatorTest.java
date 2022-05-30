@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,7 +22,7 @@ public class calculatorTest {
         double expectedResult = 11.0;
         double actualResult = calculator.calPost(780, true);
         assertEquals(expectedResult, actualResult);
-        double actualResultNoShed = calculator.calPost(870, false);
+        double actualResultNoShed = calculator.calPost(780, false);
         double expectedResultNoShed = 7;
         assertEquals(expectedResultNoShed, actualResultNoShed);
     }
@@ -33,9 +34,6 @@ public class calculatorTest {
         int expectedResult = 15;
         int actualResult = calculator.calRafters(780);
         assertEquals(expectedResult, actualResult);
-/*        double actualResultNoShed = calculator.calPost(8.7, false);
-        double expectedResultNoShed = 7;
-        assertEquals(expectedResultNoShed, actualResultNoShed);*/
     }
 
     @Test
@@ -47,17 +45,6 @@ public class calculatorTest {
         assertEquals(expectedResult, actualResult);
     }
 
-//    @Test
-//    void testCalLooseWood() throws SQLException
-//    {
-//        Calculator calculator = new Calculator();
-//        double expectedResult = 12.0;
-//        double actualResult = calculator.calLooseWoodGavl(7.8);
-//        assertEquals(expectedResult, actualResult);
-//        expectedResult = 4;
-//    }
-
-    @Test
     void testCalStern(int expectedL, int expectedS, int length, int materialL, int materialS, int times) throws SQLException
     {
         Calculator calculator = new Calculator();
@@ -113,10 +100,12 @@ public class calculatorTest {
     @Test
     void testCalScrews(){
         Calculator calculator = new Calculator();
-        int expectedResult = 3;
+        ArrayList<Integer> expectedAmount = new ArrayList<>(
+                Arrays.asList(3,2,15,15,1,3,18,12,2,2,1,2,32)
+        );
         ArrayList<Integer> actualResult = calculator.calScrews(600, 780);
-        assertEquals(expectedResult, actualResult.get(1));
-        expectedResult = 2;
-        assertEquals(expectedResult, actualResult.get(2));
+        for(int i = 0; i < actualResult.size(); i++){
+            assertEquals(expectedAmount.get(i), actualResult.get(i));
+        }
     }
 }

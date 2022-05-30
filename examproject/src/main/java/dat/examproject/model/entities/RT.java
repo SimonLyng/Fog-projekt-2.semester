@@ -78,13 +78,16 @@ public class RT {
     }
 
     //
-//    @Override
-//    public boolean equals(Object o)
-//    {
-//        if (this == o) return true;
-//        if (!(o instanceof Order)) return false;
-//
-//        RTList order = (RTList) o;
-//        return getIdOrder() == order.getIdOrder() && getRtid() == order.getRtid() && getAmount() == order.getAmount();
-//    }
+    @Override
+    public boolean equals(Object rt)
+    {
+        if (this == rt) return true;
+        if (!(rt instanceof RT)) return false;
+
+        RT rtList = (RT) rt;
+        return getRtid() == rtList.getRtid() && getType().equals(((RT) rt).getType()) &&
+                getDescription().equals(((RT) rt).getDescription()) && getLength() == ((RT) rt).getLength() &&
+                getAmount() == ((RT) rt).getAmount() && getDesc().equals(((RT) rt).getDesc()) &&
+                getPrice() == ((RT) rt).getPrice();
+    }
 }

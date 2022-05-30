@@ -44,7 +44,7 @@ public class StykListMapper {
                     amount = rs.getInt("amount");
                     desc = rs.getString("text");
                     price = rs.getInt("price");
-
+                    System.out.println("RT id: "+rtid);
                     rt = new RT(rtid, type, description, length, amount, desc, price);
                     roofTree.add(rt);
                 }
@@ -234,24 +234,11 @@ public class StykListMapper {
     }
 
     public StykList readStykList(int idOrder) throws DatabaseException {
-        StykList stykList = new StykList(getRT(idOrder), getSF(idOrder));
+        System.out.println(idOrder);
+        ArrayList<RT> rt = getRT(idOrder);
+        ArrayList<SF> sf = getSF(idOrder);
+        System.out.println("RT: "+ rt.size()+" sf: "+sf.size());
+        StykList stykList = new StykList(rt, sf);
         return stykList;
-    }
-
-    public void updateOrders(int idCustommer, int idOrder){
-        String sql = "UPDATE orders SET idcustomer = ? WHERE idorder = ?";
-        try (Connection connection = connectionPool.getConnection())
-        {
-            try (PreparedStatement stmt = connection.prepareStatement(sql))
-            {
-                stmt.setInt(1, idCustommer);
-                stmt.setInt(2, idOrder);
-                stmt.executeUpdate();
-            }
-        }
-        catch (SQLException ex)
-        {
-            ex.printStackTrace();
-        }
     }
 }
