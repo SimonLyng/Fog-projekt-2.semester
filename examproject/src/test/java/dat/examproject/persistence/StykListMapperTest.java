@@ -39,6 +39,7 @@ public class StykListMapperTest {
     {
         try (Connection testConnection = connectionPool.getConnection()) {
             try (Statement stmt = testConnection.createStatement() ) {
+                System.out.println("hello");
                 // Remove all rows from all tables
                 stmt.execute("delete from rtpiecelist");
                 stmt.execute("delete from sfpiecelist");
@@ -151,6 +152,7 @@ public class StykListMapperTest {
         expectedList.add(rt17);
         expectedList.add(rt18);
         ArrayList<RT> actualList = stykListMapper.getRT(2);
+        System.out.println(actualList.size());
         for(int i = 0; i < expectedList.size(); i++){
             assertEquals(actualList.get(i), expectedList.get(i));
         }
