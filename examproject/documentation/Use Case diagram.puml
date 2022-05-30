@@ -26,15 +26,15 @@ Admin --> adminU4
 Kunde --> kundeU4
 Kunde --> kundeU5
 Admin --> adminU5
-kundeU1 <-- System
-kundeU2 <-- System
-kundeU3 <-- System
-kundeU4 <-- System
-kundeU5 <-- System
-adminU1 <-- System
-adminU2 <-- System
-adminU3 <-- System
-adminU4 <-- System
-adminU5 <-- System
+kundeU1 --> System
+kundeU2 --> System
+kundeU3 --> System
+kundeU4 --> System
+kundeU5 --> System
+adminU1 --> System
+adminU2 --> System
+adminU3 --> System
+adminU4 --> System
+adminU5 --> System
 
 @enduml
